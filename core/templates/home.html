@@ -1,0 +1,79 @@
+{% load socialaccount %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Abdihakim's System - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            font-family: 'Roboto', sans-serif;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: rgba(0,0,0,0.7);
+            padding: 50px 40px;
+            border-radius: 15px;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+        }
+        h1 {
+            color: #00ffae;
+            margin-bottom: 30px;
+        }
+        p { margin-bottom: 20px; color: #ddd; }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            color: #444;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            margin: 10px 0;
+            transition: 0.3s;
+        }
+        .btn:hover { background: #f1f1f1; transform: translateY(-2px); }
+        .btn img {
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        @media (max-width: 500px) {
+            .container { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Abdihakim's System 🚀</h1>
+        <p>Sign in to your account</p>
+
+        <!-- Email login -->
+        <a class="btn" href="{% url 'account_login' %}">
+            <img src="https://img.icons8.com/ios-glyphs/30/000000/email.png"/>
+            Login with Email
+        </a>
+
+        <!-- Google login -->
+        <a class="btn" href="{% provider_login_url 'google' %}">
+            <img src="https://img.icons8.com/color/48/000000/google-logo.png"/>
+            Sign in with Google
+        </a>
+
+        <p>Don't have an account? <a href="{% url 'account_signup' %}" style="color:#00ffae;">Sign Up</a></p>
+    </div>
+</body>
+</html>

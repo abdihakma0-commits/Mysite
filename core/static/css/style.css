@@ -1,0 +1,58 @@
+body {
+    background: #111;
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    padding: 50px;
+}
+
+h1 {
+    color: #00ffae;
+}
+
+.container, .login-container {
+    background: #222;
+    padding: 30px;
+    border-radius: 12px;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 25px;
+    margin: 10px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.email-btn {
+    background: #00ffae;
+    color: #111;
+}
+
+.email-btn:hover {
+    background: #00cc8f;
+    color: #fff;
+}
+
+.google-btn {
+    background: #fff;
+    color: #111;
+    border: 2px solid #ccc;
+}
+
+.google-btn:hover {
+    background: #f1f1f1;
+    border-color: #aaa;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}

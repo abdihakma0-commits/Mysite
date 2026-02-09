@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Abdihakim's System</title>
+    <style>
+        body { font-family: sans-serif; background:#111; color:white; text-align:center; padding:50px;}
+        h1 { color:#00ffae; }
+        a { color:#00ffae; text-decoration:none; font-weight:bold; }
+        a:hover { color: #ffae00; }
+    </style>
+</head>
+<body>
+    <h1>Welcome, {{ user.username }}! 🎉</h1>
+    <p>This is your private dashboard.</p>
+    <p><a href="{% url 'account_logout' %}">Logout</a></p>
+</body>
+</html>

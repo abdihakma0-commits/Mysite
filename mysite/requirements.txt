@@ -1,0 +1,7 @@
+Django
+gunicorn
+whitenoise
+django-allauth
+requests
+PyJWT
+cryptography
