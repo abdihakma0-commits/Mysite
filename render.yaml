@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: myapp-pro
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn mysite.wsgi:application"
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: false
+      - key: ALLOWED_HOSTS
+        value: .onrender.com
+      - key: DATABASE_URL
+        fromDatabase:
+          name: myapp-db
+          property: connectionString
+
+databases:
+  - name: myapp-db
+    databaseName: myapp
+    user: myapp_user
