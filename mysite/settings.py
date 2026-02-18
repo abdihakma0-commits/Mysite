@@ -4,6 +4,7 @@ Django settings for mysite project.
 from pathlib import Path
 from decouple import config
 import dj_database_url
+import os
 
 # Build paths
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -12,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY
 # =========================
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-default-key-change-this')
-DEBUG = config('DEBUG', default=True, cast=bool)
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1').split(',')
 ALLOWED_HOSTS.extend(['.onrender.com', 'localhost', '127.0.0.1'])
@@ -36,12 +37,12 @@ INSTALLED_APPS = [
     
     # Local apps
     'core',
-    'blog',  # <-- ADD THIS LINE
+    'blog',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Must be here
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -77,6 +78,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # DATABASE
 # =========================
 if DEBUG:
+    # SQLite for development
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -85,6 +87,7 @@ if DEBUG:
     }
     print("📊 Using SQLite database for development")
 else:
+    # PostgreSQL for production
     DATABASES = {
         'default': dj_database_url.config(
             default=config('DATABASE_URL'),
@@ -112,13 +115,20 @@ USE_I18N = True
 USE_TZ = True
 
 # =========================
-# STATIC & MEDIA FILES
+# STATIC FILES (CSS, JavaScript, Images)
 # =========================
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',  # Source static files
+]
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # Collected static files
+
+# Whitenoise configuration
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# =========================
+# MEDIA FILES (User uploaded)
+# =========================
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
