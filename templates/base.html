@@ -9,27 +9,448 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Google Fonts for stylish typography -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Animate.css for animations -->
+    <!-- Animate.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        /* ========== ANIMATED NAVBAR ========== */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            animation: slideDown 0.8s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        /* Logo Animation */
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            animation: logoGlow 2s infinite;
+        }
+        
+        @keyframes logoGlow {
+            0%, 100% { text-shadow: 0 0 10px rgba(102, 126, 234, 0.3); }
+            50% { text-shadow: 0 0 20px rgba(102, 126, 234, 0.6); }
+        }
+        
+        .logo i {
+            font-size: 2rem;
+            animation: gavelSwing 3s infinite ease-in-out;
+            transform-origin: top center;
+        }
+        
+        @keyframes gavelSwing {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(10deg); }
+            75% { transform: rotate(-10deg); }
+        }
+        
+        /* Navigation Links */
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+        
+        .nav-item {
+            position: relative;
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            font-size: 1.1rem;
+            padding: 0.5rem 0;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-item i {
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+        
+        /* Animated Underline */
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transition: transform 0.3s ease;
+            transform-origin: center;
+        }
+        
+        .nav-item:hover {
+            color: #667eea;
+        }
+        
+        .nav-item:hover::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+        
+        .nav-item:hover i {
+            transform: translateY(-2px);
+        }
+        
+        /* Active Link */
+        .nav-item.active {
+            color: #667eea;
+        }
+        
+        .nav-item.active::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+        
+        /* Animated Buttons */
+        .btn-nav {
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-nav::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .btn-nav:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn-login {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+            animation: pulse 2s infinite;
+        }
+        
+        .btn-login:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-signup {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-signup:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        /* User Menu */
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #f5f7fa, #e9ecf0);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .user-menu:hover {
+            background: linear-gradient(135deg, #e9ecf0, #dde0e5);
+            transform: translateY(-2px);
+            border-color: #667eea;
+        }
+        
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+            animation: avatarPulse 2s infinite;
+        }
+        
+        @keyframes avatarPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(102, 126, 234, 0); }
+        }
+        
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            font-size: 1.8rem;
+            color: #667eea;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .menu-toggle:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Main Container */
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - 80px);
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+            padding: 2rem 0;
+            transition: transform 0.3s;
+            animation: slideInLeft 0.5s ease-out;
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+        }
+        
+        .sidebar-item {
+            padding: 1rem 2rem;
+            margin: 0.5rem 0;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sidebar-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #667eea20, transparent);
+            transition: width 0.3s;
+            z-index: -1;
+        }
+        
+        .sidebar-item:hover::before,
+        .sidebar-item.active::before {
+            width: 100%;
+        }
+        
+        .sidebar-item:hover,
+        .sidebar-item.active {
+            border-left: 4px solid #667eea;
+        }
+        
+        .sidebar-item a {
+            text-decoration: none;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+        
+        .sidebar-item i {
+            width: 25px;
+            color: #667eea;
+            transition: transform 0.3s;
+        }
+        
+        .sidebar-item:hover i {
+            transform: translateX(5px);
+        }
+        
+        /* Content Area */
+        .content {
+            flex: 1;
+            padding: 2rem 5%;
+            background: #f8f9fa;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Messages */
+        .messages {
+            margin-bottom: 2rem;
+        }
+        
+        .alert {
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: white;
+                flex-direction: column;
+                padding: 2rem;
+                transition: left 0.3s;
+                z-index: 999;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .sidebar {
+                position: fixed;
+                left: -280px;
+                top: 80px;
+                height: calc(100vh - 80px);
+                z-index: 998;
+            }
+            
+            .sidebar.active {
+                left: 0;
+            }
+        }
+    </style>
+    
     {% block extra_css %}{% endblock %}
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar animate__animated animate__fadeInDown">
-        <div class="logo">
+    <nav class="navbar">
+        <div class="logo animate__animated animate__fadeInLeft">
             <i class="fas fa-gavel"></i> Hakimu Official
         </div>
         
-        <div class="nav-links">
-            <a href="/"><i class="fas fa-home"></i> Home</a>
-            <a href="/about/"><i class="fas fa-info-circle"></i> About</a>
-            <a href="/contact/"><i class="fas fa-envelope"></i> Contact</a>
+        <div class="menu-toggle" onclick="toggleMobileMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
+        
+        <div class="nav-links" id="navLinks">
+            <a href="/" class="nav-item {% if request.path == '/' %}active{% endif %}">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <a href="/about/" class="nav-item {% if request.path == '/about/' %}active{% endif %}">
+                <i class="fas fa-info-circle"></i> About
+            </a>
+            <a href="/contact/" class="nav-item {% if request.path == '/contact/' %}active{% endif %}">
+                <i class="fas fa-envelope"></i> Contact
+            </a>
             
             {% if user.is_authenticated %}
                 <div class="user-menu" onclick="toggleSidebar()">
@@ -40,8 +461,12 @@
                     <i class="fas fa-chevron-down"></i>
                 </div>
             {% else %}
-                <a href="/login/" class="btn btn-primary">Login</a>
-                <a href="/signup/" class="btn btn-secondary">Signup</a>
+                <a href="/login/" class="btn-nav btn-login animate__animated animate__pulse animate__infinite">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+                <a href="/signup/" class="btn-nav btn-signup animate__animated animate__fadeInRight">
+                    <i class="fas fa-user-plus"></i> Signup
+                </a>
             {% endif %}
         </div>
     </nav>
@@ -49,7 +474,7 @@
     <div class="main-container">
         <!-- Sidebar (only for authenticated users) -->
         {% if user.is_authenticated %}
-        <div class="sidebar animate__animated animate__fadeInLeft" id="sidebar">
+        <div class="sidebar" id="sidebar">
             <ul class="sidebar-menu">
                 <li class="sidebar-item {% if request.path == '/dashboard/' %}active{% endif %}">
                     <a href="/dashboard/"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
@@ -74,7 +499,7 @@
         {% endif %}
         
         <!-- Main Content -->
-        <div class="content animate__animated animate__fadeIn">
+        <div class="content">
             <!-- Messages -->
             {% if messages %}
             <div class="messages">
@@ -91,6 +516,50 @@
             {% endblock %}
         </div>
     </div>
+    
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+        
+        // Sidebar toggle
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+        
+        // Auto-hide alerts after 5 seconds
+        setTimeout(function() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function(alert) {
+                alert.style.transition = 'opacity 0.5s';
+                alert.style.opacity = '0';
+                setTimeout(function() {
+                    alert.style.display = 'none';
+                }, 500);
+            });
+        }, 5000);
+        
+        // Add active class to current nav item
+        const currentPath = window.location.pathname;
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            if (item.getAttribute('href') === currentPath) {
+                item.classList.add('active');
+            }
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navLinks = document.getElementById('navLinks');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            if (!navLinks.contains(event.target) && !menuToggle.contains(event.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+    </script>
     
     <!-- Custom JS -->
     <script src="{% static 'js/main.js' %}"></script>
