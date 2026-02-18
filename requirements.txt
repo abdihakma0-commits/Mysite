@@ -15,11 +15,9 @@ gunicorn==21.2.0
 # Static files in production
 whitenoise==6.6.0
 
-# Database (automatically uses SQLite for dev, PostgreSQL for prod)
+# Database
 dj-database-url==2.1.0
-
-# PostgreSQL support (only used in production)
 psycopg2-binary==2.9.9
 
-# Image handling (optional - comment out if not needed)
-Pillow==10.1.0
+# Image handling - Updated for Python 3.14 compatibility
+Pillow==11.0.0
