@@ -42,7 +42,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Must be here
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -75,10 +75,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # =========================
-# DATABASE
+# DATABASE - SQLite for development, PostgreSQL for production with fallback
 # =========================
 if DEBUG:
-    # SQLite for development
+    # Local development - always use SQLite
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -87,14 +87,25 @@ if DEBUG:
     }
     print("📊 Using SQLite database for development")
 else:
-    # PostgreSQL for production
-    DATABASES = {
-        'default': dj_database_url.config(
-            default=config('DATABASE_URL'),
-            conn_max_age=600,
-        )
-    }
-    print("🐘 Using PostgreSQL database for production")
+    # Production on Render - try PostgreSQL, fall back to SQLite
+    try:
+        # Try to use PostgreSQL if DATABASE_URL exists
+        DATABASES = {
+            'default': dj_database_url.config(
+                default=config('DATABASE_URL'),
+                conn_max_age=600,
+            )
+        }
+        print("🐘 Using PostgreSQL database for production")
+    except:
+        # Fall back to SQLite if DATABASE_URL not set
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': BASE_DIR / 'db.sqlite3',
+            }
+        }
+        print("⚠️ DATABASE_URL not found, using SQLite as fallback for production")
 
 # =========================
 # PASSWORD VALIDATION
@@ -119,11 +130,9 @@ USE_TZ = True
 # =========================
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',  # Source static files
+    BASE_DIR / 'static',
 ]
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # Collected static files
-
-# Whitenoise configuration
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # =========================
