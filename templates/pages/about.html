@@ -1,52 +1,290 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}About Us - MyApp Pro{% endblock %}
+{% block title %}About Hakimu - Legal Tech Innovators{% endblock %}
+
+{% block extra_css %}
+<style>
+    .about-header {
+        text-align: center;
+        padding: 3rem 0;
+        background: linear-gradient(135deg, #667eea20, #764ba220);
+        border-radius: 30px;
+        margin-bottom: 3rem;
+        animation: fadeInDown 0.8s ease-out;
+    }
+    
+    .about-header h1 {
+        font-size: 3rem;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 1rem;
+    }
+    
+    .mission-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        margin-bottom: 4rem;
+        align-items: center;
+    }
+    
+    .mission-content {
+        animation: slideInLeft 0.8s ease-out;
+    }
+    
+    .mission-content h2 {
+        font-size: 2.2rem;
+        color: #333;
+        margin-bottom: 1.5rem;
+    }
+    
+    .mission-content p {
+        color: #666;
+        line-height: 1.8;
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .mission-stats {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 30px;
+        padding: 3rem;
+        color: white;
+        text-align: center;
+        animation: slideInRight 0.8s ease-out;
+    }
+    
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+    
+    .stat-label {
+        font-size: 1.2rem;
+        opacity: 0.9;
+    }
+    
+    .team-section {
+        margin-top: 4rem;
+    }
+    
+    .team-section h2 {
+        text-align: center;
+        font-size: 2.5rem;
+        color: #333;
+        margin-bottom: 3rem;
+        animation: fadeInUp 0.8s ease-out;
+    }
+    
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+    }
+    
+    .team-card {
+        background: white;
+        border-radius: 30px;
+        padding: 2rem;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        animation: fadeInUp 0.8s ease-out;
+        animation-fill-mode: both;
+    }
+    
+    .team-card:nth-child(1) { animation-delay: 0.2s; }
+    .team-card:nth-child(2) { animation-delay: 0.4s; }
+    .team-card:nth-child(3) { animation-delay: 0.6s; }
+    
+    .team-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+    }
+    
+    .team-avatar {
+        width: 150px;
+        height: 150px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 50%;
+        margin: 0 auto 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 5px solid white;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .team-avatar i {
+        font-size: 4rem;
+        color: white;
+    }
+    
+    .team-card h3 {
+        font-size: 1.5rem;
+        color: #333;
+        margin-bottom: 0.5rem;
+    }
+    
+    .team-role {
+        color: #667eea;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+    }
+    
+    .team-bio {
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+    
+    .team-social {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+    }
+    
+    .team-social a {
+        width: 40px;
+        height: 40px;
+        background: #f0f2f5;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #667eea;
+        transition: all 0.3s ease;
+    }
+    
+    .team-social a:hover {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        transform: translateY(-3px);
+    }
+    
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-<div style="max-width: 1200px; margin: 0 auto;">
-    <!-- Hero Section -->
-    <div style="text-align: center; padding: 4rem 0; background: linear-gradient(135deg, #667eea20, #764ba220); border-radius: 30px; margin-bottom: 3rem;">
-        <h1 style="font-size: 3rem; color: var(--text-dark); margin-bottom: 1rem;">About MyApp Pro</h1>
-        <p style="font-size: 1.2rem; color: var(--text-light); max-width: 700px; margin: 0 auto;">We're on a mission to make professional web development accessible to everyone.</p>
+<div class="about-header">
+    <h1>About Hakimu ⚖️</h1>
+    <p style="font-size: 1.2rem; color: #666;">Transforming legal services through technology</p>
+</div>
+
+<div class="mission-section">
+    <div class="mission-content">
+        <h2>Our Mission</h2>
+        <p>At Hakimu, we're on a mission to democratize access to legal services through innovative technology. We believe that justice should be accessible to everyone, regardless of their location or financial situation.</p>
+        <p>Our platform connects clients with legal professionals, streamlines case management, and provides powerful tools for legal research and documentation. We're building the future of legal services, today.</p>
     </div>
-    
-    <!-- Mission Section -->
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-bottom: 4rem; align-items: center;">
+    <div class="mission-stats">
+        <div style="margin-bottom: 2rem;">
+            <div class="stat-number">500+</div>
+            <div class="stat-label">Happy Clients</div>
+        </div>
+        <div style="margin-bottom: 2rem;">
+            <div class="stat-number">50+</div>
+            <div class="stat-label">Legal Professionals</div>
+        </div>
         <div>
-            <h2 style="font-size: 2rem; color: var(--text-dark); margin-bottom: 1.5rem;">Our Mission</h2>
-            <p style="color: var(--text-light); line-height: 1.8; margin-bottom: 1rem;">To provide developers with a solid foundation for building professional web applications using Django. We believe in clean code, beautiful design, and exceptional user experience.</p>
-            <p style="color: var(--text-light); line-height: 1.8;">Our platform is built with best practices in mind, ensuring that your projects are secure, scalable, and maintainable.</p>
-        </div>
-        <div style="background: var(--primary-gradient); border-radius: 20px; padding: 3rem; color: white; text-align: center;">
-            <i class="fas fa-rocket" style="font-size: 4rem; margin-bottom: 1rem;"></i>
-            <h3 style="font-size: 2rem; margin-bottom: 0.5rem;">500+</h3>
-            <p>Projects Launched</p>
+            <div class="stat-number">1000+</div>
+            <div class="stat-label">Cases Handled</div>
         </div>
     </div>
+</div>
+
+<div class="team-section">
+    <h2>Meet Our Team 👥</h2>
     
-    <!-- Team Section -->
-    <h2 style="font-size: 2rem; color: var(--text-dark); text-align: center; margin-bottom: 2rem;">Meet Our Team</h2>
-    <div class="grid">
-        <div class="card" style="text-align: center;">
-            <img src="https://via.placeholder.com/150" alt="Team Member" style="width: 150px; height: 150px; border-radius: 50%; margin-bottom: 1rem; border: 4px solid var(--primary-color);">
-            <h3>John Doe</h3>
-            <p style="color: var(--primary-color); margin-bottom: 0.5rem;">Founder & CEO</p>
-            <p style="color: var(--text-light);">10+ years of experience in web development</p>
+    <div class="team-grid">
+        <!-- Hakimu - Lead Developer -->
+        <div class="team-card">
+            <div class="team-avatar">
+                <i class="fas fa-user-tie"></i>
+            </div>
+            <h3>Abdihakim</h3>
+            <div class="team-role">Lead Developer & Founder</div>
+            <p class="team-bio">Passionate about legal tech with 5+ years of experience in Django development. Building solutions that make justice accessible to all.</p>
+            <div class="team-social">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
         </div>
         
-        <div class="card" style="text-align: center;">
-            <img src="https://via.placeholder.com/150" alt="Team Member" style="width: 150px; height: 150px; border-radius: 50%; margin-bottom: 1rem; border: 4px solid var(--primary-color);">
-            <h3>Jane Smith</h3>
-            <p style="color: var(--primary-color); margin-bottom: 0.5rem;">Lead Developer</p>
-            <p style="color: var(--text-light);">Django expert and open source contributor</p>
+        <!-- Legal Expert -->
+        <div class="team-card">
+            <div class="team-avatar">
+                <i class="fas fa-user-graduate"></i>
+            </div>
+            <h3>Fatima Hassan</h3>
+            <div class="team-role">Senior Legal Counsel</div>
+            <p class="team-bio">Experienced attorney specializing in corporate law and legal technology integration. Ensuring our platform meets professional standards.</p>
+            <div class="team-social">
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
         </div>
         
-        <div class="card" style="text-align: center;">
-            <img src="https://via.placeholder.com/150" alt="Team Member" style="width: 150px; height: 150px; border-radius: 50%; margin-bottom: 1rem; border: 4px solid var(--primary-color);">
-            <h3>Mike Johnson</h3>
-            <p style="color: var(--primary-color); margin-bottom: 0.5rem;">UI/UX Designer</p>
-            <p style="color: var(--text-light);">Creating beautiful and intuitive interfaces</p>
+        <!-- UI/UX Designer -->
+        <div class="team-card">
+            <div class="team-avatar">
+                <i class="fas fa-paint-brush"></i>
+            </div>
+            <h3>James Omondi</h3>
+            <div class="team-role">UI/UX Designer</div>
+            <p class="team-bio">Creating intuitive and beautiful interfaces that make legal technology accessible and easy to use for everyone.</p>
+            <div class="team-social">
+                <a href="#"><i class="fab fa-behance"></i></a>
+                <a href="#"><i class="fab fa-dribbble"></i></a>
+            </div>
         </div>
     </div>
 </div>

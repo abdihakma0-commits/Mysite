@@ -1,29 +1,27 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Contact Us - MyApp Pro{% endblock %}
+{% block title %}Contact Us - Hakimu Official{% endblock %}
 
 {% block extra_css %}
 <style>
-    .contact-container {
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-    
     .contact-header {
         text-align: center;
         margin-bottom: 3rem;
+        animation: fadeInDown 0.8s ease-out;
     }
     
     .contact-header h1 {
-        font-size: 2.5rem;
-        color: var(--text-dark);
+        font-size: 2.8rem;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         margin-bottom: 1rem;
     }
     
     .contact-header p {
-        color: var(--text-light);
-        font-size: 1.1rem;
+        color: #666;
+        font-size: 1.2rem;
     }
     
     .contact-grid {
@@ -34,37 +32,48 @@
     
     .contact-info {
         background: white;
-        border-radius: 20px;
+        border-radius: 30px;
         padding: 2.5rem;
-        box-shadow: var(--shadow);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        animation: slideInLeft 0.8s ease-out;
     }
     
     .contact-info h3 {
-        color: var(--text-dark);
-        margin-bottom: 1.5rem;
-        font-size: 1.5rem;
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+        color: #333;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
     }
     
     .info-item {
         display: flex;
         align-items: center;
-        gap: 1rem;
-        margin-bottom: 1.5rem;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
         padding: 1rem;
-        background: #f8f9fa;
-        border-radius: 12px;
-        transition: transform 0.3s;
+        background: linear-gradient(135deg, #f5f7fa, #e9ecf0);
+        border-radius: 15px;
+        transition: all 0.3s ease;
+        animation: fadeInUp 0.5s ease-out;
+        animation-fill-mode: both;
     }
     
+    .info-item:nth-child(2) { animation-delay: 0.2s; }
+    .info-item:nth-child(3) { animation-delay: 0.4s; }
+    .info-item:nth-child(4) { animation-delay: 0.6s; }
+    
     .info-item:hover {
-        transform: translateX(5px);
+        transform: translateX(10px);
+        background: linear-gradient(135deg, #667eea20, #764ba220);
     }
     
     .info-icon {
-        width: 50px;
-        height: 50px;
-        background: var(--primary-gradient);
-        border-radius: 12px;
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -72,50 +81,176 @@
     
     .info-icon i {
         color: white;
-        font-size: 1.5rem;
+        font-size: 1.8rem;
     }
     
     .info-content h4 {
-        color: var(--text-dark);
+        font-size: 1.2rem;
         margin-bottom: 0.3rem;
+        color: #333;
     }
     
     .info-content p {
-        color: var(--text-light);
+        color: #666;
+        font-size: 1.1rem;
+    }
+    
+    .info-content .small {
+        font-size: 0.9rem;
+        color: #999;
+        margin-top: 0.3rem;
     }
     
     .contact-form {
         background: white;
-        border-radius: 20px;
+        border-radius: 30px;
         padding: 2.5rem;
-        box-shadow: var(--shadow);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        animation: slideInRight 0.8s ease-out;
     }
     
     .contact-form h3 {
-        color: var(--text-dark);
-        margin-bottom: 1.5rem;
-        font-size: 1.5rem;
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+        color: #333;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
     }
     
-    .form-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
+    .form-group {
+        margin-bottom: 1.5rem;
+        animation: fadeInUp 0.5s ease-out;
+        animation-fill-mode: both;
+    }
+    
+    .form-group:nth-child(1) { animation-delay: 0.1s; }
+    .form-group:nth-child(2) { animation-delay: 0.2s; }
+    .form-group:nth-child(3) { animation-delay: 0.3s; }
+    .form-group:nth-child(4) { animation-delay: 0.4s; }
+    
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: #555;
+    }
+    
+    .form-group label i {
+        color: #667eea;
+        margin-right: 0.5rem;
+    }
+    
+    .form-control {
+        width: 100%;
+        padding: 1rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+    }
+    
+    .form-control:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+    }
+    
+    textarea.form-control {
+        min-height: 120px;
+        resize: vertical;
+    }
+    
+    .btn-submit {
+        width: 100%;
+        padding: 1.2rem;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        animation: fadeInUp 0.5s ease-out 0.5s both;
+    }
+    
+    .btn-submit:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    }
+    
+    .btn-submit i {
+        margin-right: 0.5rem;
+        transition: transform 0.3s;
+    }
+    
+    .btn-submit:hover i {
+        transform: translateX(5px);
     }
     
     .map-container {
         margin-top: 3rem;
-        border-radius: 20px;
+        border-radius: 30px;
         overflow: hidden;
-        box-shadow: var(--shadow);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        animation: fadeInUp 0.8s ease-out 0.6s both;
+        height: 400px;
+    }
+    
+    .map-container iframe {
+        width: 100%;
+        height: 100%;
+    }
+    
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
     
     @media (max-width: 768px) {
         .contact-grid {
-            grid-template-columns: 1fr;
-        }
-        
-        .form-row {
             grid-template-columns: 1fr;
         }
     }
@@ -123,104 +258,130 @@
 {% endblock %}
 
 {% block content %}
-<div class="contact-container">
-    <div class="contact-header">
-        <h1>Get in Touch</h1>
-        <p>Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
-    </div>
-    
-    <div class="contact-grid">
-        <!-- Contact Information -->
-        <div class="contact-info">
-            <h3><i class="fas fa-info-circle" style="color: var(--primary-color); margin-right: 0.5rem;"></i>Contact Information</h3>
-            
-            <div class="info-item">
-                <div class="info-icon">
-                    <i class="fas fa-map-marker-alt"></i>
-                </div>
-                <div class="info-content">
-                    <h4>Address</h4>
-                    <p>123 Business Street, Suite 100<br>New York, NY 10001</p>
-                </div>
+<div class="contact-header">
+    <h1>Get in Touch with Hakimu 📞</h1>
+    <p>Have questions about our legal tech solutions? We're here to help 24/7.</p>
+</div>
+
+<div class="contact-grid">
+    <!-- Contact Information -->
+    <div class="contact-info">
+        <h3>
+            <i class="fas fa-map-marker-alt" style="color: #667eea;"></i>
+            Nairobi Office
+        </h3>
+        
+        <div class="info-item">
+            <div class="info-icon">
+                <i class="fas fa-map-pin"></i>
             </div>
-            
-            <div class="info-item">
-                <div class="info-icon">
-                    <i class="fas fa-phone"></i>
-                </div>
-                <div class="info-content">
-                    <h4>Phone</h4>
-                    <p>+1 (555) 123-4567</p>
-                    <p>Mon-Fri, 9am-6pm EST</p>
-                </div>
-            </div>
-            
-            <div class="info-item">
-                <div class="info-icon">
-                    <i class="fas fa-envelope"></i>
-                </div>
-                <div class="info-content">
-                    <h4>Email</h4>
-                    <p>support@myapppro.com</p>
-                    <p>info@myapppro.com</p>
-                </div>
-            </div>
-            
-            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                <a href="#" style="width: 40px; height: 40px; background: #f0f2f5; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary-color); transition: all 0.3s;">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="#" style="width: 40px; height: 40px; background: #f0f2f5; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary-color); transition: all 0.3s;">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a href="#" style="width: 40px; height: 40px; background: #f0f2f5; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary-color); transition: all 0.3s;">
-                    <i class="fab fa-linkedin-in"></i>
-                </a>
-                <a href="#" style="width: 40px; height: 40px; background: #f0f2f5; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary-color); transition: all 0.3s;">
-                    <i class="fab fa-instagram"></i>
-                </a>
+            <div class="info-content">
+                <h4>📍 Location</h4>
+                <p>Upper Hill, Nairobi</p>
+                <p class="small">Kencom House, 6th Floor</p>
             </div>
         </div>
         
-        <!-- Contact Form -->
-        <div class="contact-form">
-            <h3><i class="fas fa-paper-plane" style="color: var(--primary-color); margin-right: 0.5rem;"></i>Send Message</h3>
-            
-            <form method="POST">
-                {% csrf_token %}
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="name">Your Name</label>
-                        <input type="text" class="form-control" id="name" name="name" required placeholder="John Doe">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" class="form-control" id="email" name="email" required placeholder="john@example.com">
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="subject">Subject</label>
-                    <input type="text" class="form-control" id="subject" name="subject" required placeholder="How can we help?">
-                </div>
-                
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea class="form-control" id="message" name="message" rows="5" required placeholder="Your message here..."></textarea>
-                </div>
-                
-                <button type="submit" class="btn btn-primary" style="width: 100%;">
-                    <i class="fas fa-paper-plane"></i> Send Message
-                </button>
-            </form>
+        <div class="info-item">
+            <div class="info-icon">
+                <i class="fas fa-phone-alt"></i>
+            </div>
+            <div class="info-content">
+                <h4>📞 Phone</h4>
+                <p>+254 722 287517</p>
+                <p class="small">Available 24/7</p>
+            </div>
+        </div>
+        
+        <div class="info-item">
+            <div class="info-icon">
+                <i class="fas fa-envelope"></i>
+            </div>
+            <div class="info-content">
+                <h4>✉️ Email</h4>
+                <p>abdihakma2091@gmail.com</p>
+                <p class="small">Response within 1 hour</p>
+            </div>
+        </div>
+        
+        <div class="info-item">
+            <div class="info-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <div class="info-content">
+                <h4>🕒 Business Hours</h4>
+                <p>Monday - Friday: 8:00 AM - 6:00 PM</p>
+                <p class="small">Saturday: 9:00 AM - 2:00 PM</p>
+            </div>
+        </div>
+        
+        <div style="display: flex; gap: 1rem; margin-top: 2rem; justify-content: center;">
+            <a href="#" class="btn btn-secondary" style="border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
+                <i class="fab fa-whatsapp" style="font-size: 1.5rem; color: #25D366;"></i>
+            </a>
+            <a href="#" class="btn btn-secondary" style="border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
+                <i class="fab fa-twitter" style="font-size: 1.5rem; color: #1DA1F2;"></i>
+            </a>
+            <a href="#" class="btn btn-secondary" style="border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
+                <i class="fab fa-linkedin-in" style="font-size: 1.5rem; color: #0077B5;"></i>
+            </a>
         </div>
     </div>
     
-    <!-- Map -->
-    <div class="map-container">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193595.9147703055!2d-74.119763973046!3d40.69740344195777!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2s!4v1645564623456!5m2!1sen!2s" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    <!-- Contact Form -->
+    <div class="contact-form">
+        <h3>
+            <i class="fas fa-paper-plane" style="color: #667eea;"></i>
+            Send Us a Message
+        </h3>
+        
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="name">
+                    <i class="fas fa-user"></i> Your Name
+                </label>
+                <input type="text" class="form-control" id="name" name="name" required placeholder="John Doe">
+            </div>
+            
+            <div class="form-group">
+                <label for="email">
+                    <i class="fas fa-envelope"></i> Email Address
+                </label>
+                <input type="email" class="form-control" id="email" name="email" required placeholder="john@example.com">
+            </div>
+            
+            <div class="form-group">
+                <label for="subject">
+                    <i class="fas fa-tag"></i> Subject
+                </label>
+                <input type="text" class="form-control" id="subject" name="subject" required placeholder="How can we help?">
+            </div>
+            
+            <div class="form-group">
+                <label for="message">
+                    <i class="fas fa-comment"></i> Message
+                </label>
+                <textarea class="form-control" id="message" name="message" rows="5" required placeholder="Your message here..."></textarea>
+            </div>
+            
+            <button type="submit" class="btn-submit">
+                <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+        </form>
     </div>
+</div>
+
+<!-- Nairobi Map -->
+<div class="map-container">
+    <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.8462962765316!2d36.81798067496093!3d-1.2832987987229085!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f10d4c5f1b1b1%3A0x1b1b1b1b1b1b1b1b!2sNairobi%20CBD!5e0!3m2!1sen!2ske!4v1700000000000!5m2!1sen!2ske" 
+        width="100%" 
+        height="100%" 
+        style="border:0;" 
+        allowfullscreen="" 
+        loading="lazy">
+    </iframe>
 </div>
 {% endblock %}

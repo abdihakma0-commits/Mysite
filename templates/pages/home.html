@@ -1,43 +1,179 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}Home - MyApp Pro{% endblock %}
+{% block title %}Hakimu Official - Legal Tech Solutions{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero-section {
+        text-align: center;
+        padding: 4rem 0;
+        background: linear-gradient(135deg, #667eea20, #764ba220);
+        border-radius: 30px;
+        margin-bottom: 3rem;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(102,126,234,0.1) 0%, transparent 70%);
+        animation: rotate 20s linear infinite;
+    }
+    
+    @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    .hero-section h1 {
+        font-size: 3.5rem;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 1rem;
+        position: relative;
+        animation: fadeInUp 0.8s ease-out;
+    }
+    
+    .hero-section p {
+        font-size: 1.3rem;
+        color: #666;
+        max-width: 700px;
+        margin: 0 auto 2rem;
+        position: relative;
+        animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+    
+    .hero-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        position: relative;
+        animation: fadeInUp 0.8s ease-out 0.4s both;
+    }
+    
+    .hero-buttons .btn {
+        padding: 1rem 2.5rem;
+        font-size: 1.2rem;
+    }
+    
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+    
+    .feature-card {
+        background: white;
+        border-radius: 20px;
+        padding: 2rem;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        animation: fadeInUp 0.8s ease-out;
+        animation-fill-mode: both;
+    }
+    
+    .feature-card:nth-child(1) { animation-delay: 0.2s; }
+    .feature-card:nth-child(2) { animation-delay: 0.4s; }
+    .feature-card:nth-child(3) { animation-delay: 0.6s; }
+    
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+    }
+    
+    .feature-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #667eea20, #764ba220);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        font-size: 2.5rem;
+        color: #667eea;
+        transition: all 0.3s ease;
+    }
+    
+    .feature-card:hover .feature-icon {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        transform: rotate(360deg);
+    }
+    
+    .feature-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: #333;
+    }
+    
+    .feature-card p {
+        color: #666;
+        line-height: 1.6;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-<div style="text-align: center; padding: 4rem 0;">
-    <h1 style="font-size: 3rem; margin-bottom: 1rem; color: #333;">Welcome to MyApp Pro</h1>
-    <p style="font-size: 1.2rem; color: #666; max-width: 600px; margin: 0 auto 2rem;">
-        A modern, professional platform built with Django. Experience the power of professional web development.
-    </p>
+<div class="hero-section">
+    <h1 class="animate__animated animate__fadeInDown">Hakimu Official ⚖️</h1>
+    <p class="animate__animated animate__fadeInUp">Modern legal technology solutions for the digital age. Access justice anytime, anywhere.</p>
     
-    {% if not user.is_authenticated %}
-    <div style="display: flex; gap: 1rem; justify-content: center;">
-        <a href="/signup/" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem 2rem;">
+    <div class="hero-buttons">
+        {% if not user.is_authenticated %}
+        <a href="/signup/" class="btn btn-primary animate__animated animate__pulse animate__infinite">
             <i class="fas fa-user-plus"></i> Get Started
         </a>
-        <a href="/login/" class="btn btn-secondary" style="font-size: 1.1rem; padding: 1rem 2rem;">
+        <a href="/login/" class="btn btn-secondary animate__animated animate__fadeIn">
             <i class="fas fa-sign-in-alt"></i> Login
         </a>
+        {% endif %}
     </div>
-    {% endif %}
 </div>
 
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
-    <div class="card" style="text-align: center;">
-        <i class="fas fa-bolt" style="font-size: 3rem; color: #667eea; margin-bottom: 1rem;"></i>
-        <h3 style="margin-bottom: 1rem;">Lightning Fast</h3>
-        <p style="color: #666;">Optimized performance with Django's powerful backend.</p>
+<div class="features-grid">
+    <div class="feature-card">
+        <div class="feature-icon">
+            <i class="fas fa-bolt"></i>
+        </div>
+        <h3>Lightning Fast ⚡</h3>
+        <p>Optimized performance with Django's powerful backend for instant access to legal resources.</p>
     </div>
     
-    <div class="card" style="text-align: center;">
-        <i class="fas fa-shield-alt" style="font-size: 3rem; color: #667eea; margin-bottom: 1rem;"></i>
-        <h3 style="margin-bottom: 1rem;">Secure</h3>
-        <p style="color: #666;">Enterprise-grade security with Django's built-in protections.</p>
+    <div class="feature-card">
+        <div class="feature-icon">
+            <i class="fas fa-shield-alt"></i>
+        </div>
+        <h3>Secure & Private 🔒</h3>
+        <p>Enterprise-grade security with Django's built-in protections for your sensitive legal data.</p>
     </div>
     
-    <div class="card" style="text-align: center;">
-        <i class="fas fa-mobile-alt" style="font-size: 3rem; color: #667eea; margin-bottom: 1rem;"></i>
-        <h3 style="margin-bottom: 1rem;">Responsive</h3>
-        <p style="color: #666;">Beautiful design that works on all devices.</p>
+    <div class="feature-card">
+        <div class="feature-icon">
+            <i class="fas fa-mobile-alt"></i>
+        </div>
+        <h3>Mobile Ready 📱</h3>
+        <p>Beautiful responsive design that works seamlessly on all devices, from desktop to mobile.</p>
     </div>
 </div>
 {% endblock %}
