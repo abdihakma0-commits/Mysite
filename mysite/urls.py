@@ -33,6 +33,7 @@ urlpatterns = [
     path('analytics/', views.analytics_view, name='analytics'),
     
     # ==================== BLOG APP ====================
+    # Make sure 'blog' is in INSTALLED_APPS in settings.py
     path('blog/', include('blog.urls')),
 ]
 
