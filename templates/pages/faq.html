@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}FAQ - MyApp Pro{% endblock %}
+
+{% block extra_css %}
+<style>
+    .faq-container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    
+    .faq-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    
+    .faq-item {
+        background: white;
+        border-radius: 15px;
+        margin-bottom: 1rem;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+    }
+    
+    .faq-question {
+        padding: 1.5rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        color: var(--text-dark);
+        transition: background 0.3s;
+    }
+    
+    .faq-question:hover {
+        background: #f8f9fa;
+    }
+    
+    .faq-question i {
+        transition: transform 0.3s;
+    }
+    
+    .faq-question.active i {
+        transform: rotate(180deg);
+    }
+    
+    .faq-answer {
+        padding: 0 1.5rem 1.5rem 1.5rem;
+        color: var(--text-light);
+        line-height: 1.6;
+        display: none;
+    }
+    
+    .faq-answer.show {
+        display: block;
+    }
+    
+    .categories {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+    }
+    
+    .category-btn {
+        padding: 0.5rem 1.5rem;
+        border: 1px solid #ddd;
+        border-radius: 50px;
+        background: white;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    
+    .category-btn:hover,
+    .category-btn.active {
+        background: var(--primary-gradient);
+        color: white;
+        border-color: transparent;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="faq-container">
+    <div class="faq-header">
+        <h1 style="font-size: 2.5rem; color: var(--text-dark); margin-bottom: 1rem;">Frequently Asked Questions</h1>
+        <p style="color: var(--text-light); font-size: 1.1rem;">Find answers to common questions about MyApp Pro</p>
+    </div>
+    
+    <!-- Categories -->
+    <div class="categories">
+        <button class="category-btn active" onclick="filterFAQ('all')">All</button>
+        <button class="category-btn" onclick="filterFAQ('account')">Account</button>
+        <button class="category-btn" onclick="filterFAQ('billing')">Billing</button>
+        <button class="category-btn" onclick="filterFAQ('technical')">Technical</button>
+        <button class="category-btn" onclick="filterFAQ('security')">Security</button>
+    </div>
+    
+    <!-- FAQ Items -->
+    <div class="faq-list">
+        <div class="faq-item" data-category="account">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+                How do I create an account?
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                Creating an account is easy! Click on the "Sign Up" button in the top right corner, fill in your details, and you're ready to go. You'll receive a confirmation email to verify your account.
+            </div>
+        </div>
+        
+        <div class="faq-item" data-category="account">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+                I forgot my password. What should I do?
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                Click on "Forgot Password" on the login page. Enter your email address, and we'll send you instructions to reset your password. Make sure to check your spam folder if you don't see the email.
+            </div>
+        </div>
+        
+        <div class="faq-item" data-category="billing">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+                Is MyApp Pro free to use?
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                Yes! We offer a free tier with basic features. For advanced features and higher limits, we have affordable premium plans. Check our pricing page for more details.
+            </div>
+        </div>
+        
+        <div class="faq-item" data-category="technical">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+                What technologies does MyApp Pro use?
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                MyApp Pro is built with Django, a high-level Python web framework. We use modern HTML5, CSS3, and JavaScript for the frontend. The platform is designed to be fast, secure, and scalable.
+            </div>
+        </div>
+        
+        <div class="faq-item" data-category="security">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+                How secure is my data?
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                Security is our top priority. We use industry-standard encryption, secure password hashing, and regular security audits. Your data is safe with us. We never share your information with third parties.
+            </div>
+        </div>
+        
+        <div class="faq-item" data-category="technical">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+                Can I customize the dashboard?
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                Absolutely! You can customize your dashboard layout, choose which widgets to display, and set your preferences in the Settings page. Premium users get additional customization options.
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleFAQ(element) {
+    const answer = element.nextElementSibling;
+    const icon = element.querySelector('i');
+    
+    // Toggle current FAQ
+    answer.classList.toggle('show');
+    element.classList.toggle('active');
+    
+    // Close other FAQs
+    const allQuestions = document.querySelectorAll('.faq-question');
+    allQuestions.forEach(q => {
+        if (q !== element && q.classList.contains('active')) {
+            q.classList.remove('active');
+            q.nextElementSibling.classList.remove('show');
+        }
+    });
+}
+
+function filterFAQ(category) {
+    const items = document.querySelectorAll('.faq-item');
+    const buttons = document.querySelectorAll('.category-btn');
+    
+    // Update active button
+    buttons.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.textContent.toLowerCase().includes(category) || (category === 'all' && btn.textContent === 'All')) {
+            btn.classList.add('active');
+        }
+    });
+    
+    // Filter items
+    items.forEach(item => {
+        if (category === 'all' || item.dataset.category === category) {
+            item.style.display = 'block';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
+</script>
+{% endblock %}

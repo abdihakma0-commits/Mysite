@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Blog - MyApp Pro{% endblock %}
+
+{% block content %}
+<div style="max-width: 1200px; margin: 0 auto;">
+    <div style="text-align: center; margin-bottom: 3rem;">
+        <h1 style="font-size: 2.5rem; color: var(--text-dark); margin-bottom: 1rem;">Our Blog</h1>
+        <p style="color: var(--text-light);">Insights, tutorials, and news from the MyApp Pro team</p>
+    </div>
+    
+    <!-- Search and Filter -->
+    <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+        <form method="GET" style="flex: 1; display: flex; gap: 0.5rem;">
+            <input type="text" name="q" class="form-control" placeholder="Search posts..." value="{{ query }}">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+        <select class="form-control" style="width: 200px;" onchange="window.location.href=this.value">
+            <option value="">All Categories</option>
+            {% for category in categories %}
+            <option value="?category={{ category.slug }}" {% if request.GET.category == category.slug %}selected{% endif %}>
+                {{ category.name }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    
+    <!-- Blog Posts Grid -->
+    <div class="grid">
+        {% for post in posts %}
+        <div class="card">
+            {% if post.featured_image %}
+            <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px; margin-bottom: 1rem;">
+            {% else %}
+            <div style="width: 100%; height: 200px; background: var(--primary-gradient); border-radius: 10px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-newspaper" style="font-size: 3rem; color: white;"></i>
+            </div>
+            {% endif %}
+            
+            <div style="margin-bottom: 1rem;">
+                <span style="background: var(--primary-color); color: white; padding: 0.2rem 0.5rem; border-radius: 5px; font-size: 0.8rem;">
+                    {{ post.category.name }}
+                </span>
+                <span style="color: var(--text-light); margin-left: 0.5rem; font-size: 0.8rem;">
+                    <i class="far fa-clock"></i> {{ post.created_at|date:"M d, Y" }}
+                </span>
+            </div>
+            
+            <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">
+                <a href="{% url 'blog_detail' post.slug %}" style="text-decoration: none; color: var(--text-dark);">
+                    {{ post.title }}
+                </a>
+            </h2>
+            
+            <p style="color: var(--text-light); margin-bottom: 1rem;">{{ post.excerpt|default:post.content|truncatewords:30 }}</p>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="color: var(--text-light);">
+                    <i class="far fa-user"></i> {{ post.author.username }}
+                </span>
+                <a href="{% url 'blog_detail' post.slug %}" class="btn btn-primary" style="padding: 0.5rem 1rem;">
+                    Read More <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <div style="grid-column: 1/-1; text-align: center; padding: 3rem;">
+            <i class="fas fa-newspaper" style="font-size: 3rem; color: var(--text-light); margin-bottom: 1rem;"></i>
+            <h3>No posts found</h3>
+            <p style="color: var(--text-light);">Check back later for new content!</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

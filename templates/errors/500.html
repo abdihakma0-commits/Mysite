@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}500 - Server Error{% endblock %}
+
+{% block content %}
+<div style="text-align: center; padding: 4rem 0; min-height: 60vh; display: flex; align-items: center; justify-content: center;">
+    <div>
+        <h1 style="font-size: 8rem; color: var(--primary-color); margin-bottom: 0;">500</h1>
+        <h2 style="font-size: 2rem; color: var(--text-dark); margin-bottom: 1rem;">Internal Server Error</h2>
+        <p style="color: var(--text-light); margin-bottom: 2rem;">Something went wrong on our end. Please try again later.</p>
+        <a href="/" class="btn btn-primary">
+            <i class="fas fa-home"></i> Go Back Home
+        </a>
+    </div>
+</div>
+{% endblock %}

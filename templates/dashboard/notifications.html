@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Notifications - MyApp Pro{% endblock %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h1 style="font-size: 2rem; color: var(--text-dark);">
+            <i class="fas fa-bell" style="color: var(--primary-color); margin-right: 0.5rem;"></i>
+            Notifications
+        </h1>
+        <button class="btn btn-secondary" onclick="markAllAsRead()">
+            <i class="fas fa-check-double"></i> Mark all as read
+        </button>
+    </div>
+    
+    <!-- Notification Filters -->
+    <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+        <button class="btn btn-primary" style="padding: 0.5rem 1rem;" onclick="filterNotifications('all')">All</button>
+        <button class="btn btn-secondary" style="padding: 0.5rem 1rem;" onclick="filterNotifications('unread')">Unread</button>
+        <button class="btn btn-secondary" style="padding: 0.5rem 1rem;" onclick="filterNotifications('read')">Read</button>
+    </div>
+    
+    <!-- Notifications List -->
+    <div class="notifications-list">
+        <div class="card notification-item unread" style="margin-bottom: 1rem; position: relative;">
+            <div style="display: flex; gap: 1rem; align-items: start;">
+                <div style="width: 40px; height: 40px; background: var(--primary-gradient); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-user" style="color: white;"></i>
+                </div>
+                <div style="flex: 1;">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div>
+                            <h4 style="margin-bottom: 0.3rem;">Profile Update</h4>
+                            <p style="color: var(--text-light); margin-bottom: 0.5rem;">Your profile was successfully updated.</p>
+                            <span style="font-size: 0.8rem; color: var(--text-light);">2 minutes ago</span>
+                        </div>
+                        <span style="background: var(--primary-color); color: white; padding: 0.2rem 0.5rem; border-radius: 50px; font-size: 0.7rem;">New</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card notification-item" style="margin-bottom: 1rem;">
+            <div style="display: flex; gap: 1rem; align-items: start;">
+                <div style="width: 40px; height: 40px; background: #f0f2f5; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-lock" style="color: var(--primary-color);"></i>
+                </div>
+                <div style="flex: 1;">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div>
+                            <h4 style="margin-bottom: 0.3rem;">Security Alert</h4>
+                            <p style="color: var(--text-light); margin-bottom: 0.5rem;">New login from Chrome on Windows</p>
+                            <span style="font-size: 0.8rem; color: var(--text-light);;">1 hour ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card notification-item" style="margin-bottom: 1rem;">
+            <div style="display: flex; gap: 1rem; align-items: start;">
+                <div style="width: 40px; height: 40px; background: #f0f2f5; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-envelope" style="color: var(--primary-color);"></i>
+                </div>
+                <div style="flex: 1;">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div>
+                            <h4 style="margin-bottom: 0.3rem;">Email Verified</h4>
+                            <p style="color: var(--text-light); margin-bottom: 0.5rem;">Your email address has been verified.</p>
+                            <span style="font-size: 0.8rem; color: var(--text-light);;">3 hours ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function markAllAsRead() {
+    const notifications = document.querySelectorAll('.notification-item.unread');
+    notifications.forEach(notification => {
+        notification.classList.remove('unread');
+        const badge = notification.querySelector('span:last-child');
+        if (badge && badge.textContent === 'New') {
+            badge.remove();
+        }
+    });
+    alert('All notifications marked as read');
+}
+
+function filterNotifications(type) {
+    const notifications = document.querySelectorAll('.notification-item');
+    const buttons = document.querySelectorAll('.btn');
+    
+    // Update button styles
+    buttons.forEach(btn => {
+        btn.classList.remove('btn-primary');
+        btn.classList.add('btn-secondary');
+    });
+    event.target.classList.remove('btn-secondary');
+    event.target.classList.add('btn-primary');
+    
+    // Filter notifications
+    notifications.forEach(notification => {
+        switch(type) {
+            case 'all':
+                notification.style.display = 'block';
+                break;
+            case 'unread':
+                notification.style.display = notification.classList.contains('unread') ? 'block' : 'none';
+                break;
+            case 'read':
+                notification.style.display = !notification.classList.contains('unread') ? 'block' : 'none';
+                break;
+        }
+    });
+}
+</script>
+{% endblock %}

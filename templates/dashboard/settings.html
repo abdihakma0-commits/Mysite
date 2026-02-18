@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Settings - MyApp Pro{% endblock %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto;">
+    <h1 style="font-size: 2rem; color: var(--text-dark); margin-bottom: 2rem;">
+        <i class="fas fa-cog" style="color: var(--primary-color); margin-right: 0.5rem;"></i>
+        Account Settings
+    </h1>
+    
+    <div class="card" style="margin-bottom: 2rem;">
+        <h3 style="margin-bottom: 1.5rem;">Profile Information</h3>
+        <form method="POST" action="/profile/">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="first_name">First Name</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" value="{{ user.first_name }}" placeholder="Enter your first name">
+            </div>
+            
+            <div class="form-group">
+                <label for="last_name">Last Name</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" value="{{ user.last_name }}" placeholder="Enter your last name">
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required placeholder="Enter your email">
+            </div>
+            
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i> Save Changes
+            </button>
+        </form>
+    </div>
+    
+    <div class="card" style="margin-bottom: 2rem;">
+        <h3 style="margin-bottom: 1.5rem;">Preferences</h3>
+        <form>
+            <div class="form-group">
+                <label style="display: flex; align-items: center; gap: 1rem;">
+                    <input type="checkbox" checked> Enable email notifications
+                </label>
+            </div>
+            
+            <div class="form-group">
+                <label style="display: flex; align-items: center; gap: 1rem;">
+                    <input type="checkbox" checked> Dark mode
+                </label>
+            </div>
+            
+            <div class="form-group">
+                <label style="display: flex; align-items: center; gap: 1rem;">
+                    <input type="checkbox"> Two-factor authentication
+                </label>
+            </div>
+            
+            <div class="form-group">
+                <label for="language">Language</label>
+                <select class="form-control" id="language">
+                    <option>English</option>
+                    <option>Spanish</option>
+                    <option>French</option>
+                    <option>German</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i> Save Preferences
+            </button>
+        </form>
+    </div>
+    
+    <div class="card">
+        <h3 style="margin-bottom: 1.5rem; color: #dc3545;">Danger Zone</h3>
+        <p style="color: var(--text-light); margin-bottom: 1rem;">Once you delete your account, there is no going back. Please be certain.</p>
+        <button class="btn btn-secondary" style="background: #dc3545; color: white; border: none;" onclick="confirmAction('Are you sure you want to delete your account?', function() { alert('Account deletion requested'); })">
+            <i class="fas fa-trash"></i> Delete Account
+        </button>
+    </div>
+</div>
+{% endblock %}

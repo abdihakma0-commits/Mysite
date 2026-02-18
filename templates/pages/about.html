@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}About Us - MyApp Pro{% endblock %}
+
+{% block content %}
+<div style="max-width: 1200px; margin: 0 auto;">
+    <!-- Hero Section -->
+    <div style="text-align: center; padding: 4rem 0; background: linear-gradient(135deg, #667eea20, #764ba220); border-radius: 30px; margin-bottom: 3rem;">
+        <h1 style="font-size: 3rem; color: var(--text-dark); margin-bottom: 1rem;">About MyApp Pro</h1>
+        <p style="font-size: 1.2rem; color: var(--text-light); max-width: 700px; margin: 0 auto;">We're on a mission to make professional web development accessible to everyone.</p>
+    </div>
+    
+    <!-- Mission Section -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-bottom: 4rem; align-items: center;">
+        <div>
+            <h2 style="font-size: 2rem; color: var(--text-dark); margin-bottom: 1.5rem;">Our Mission</h2>
+            <p style="color: var(--text-light); line-height: 1.8; margin-bottom: 1rem;">To provide developers with a solid foundation for building professional web applications using Django. We believe in clean code, beautiful design, and exceptional user experience.</p>
+            <p style="color: var(--text-light); line-height: 1.8;">Our platform is built with best practices in mind, ensuring that your projects are secure, scalable, and maintainable.</p>
+        </div>
+        <div style="background: var(--primary-gradient); border-radius: 20px; padding: 3rem; color: white; text-align: center;">
+            <i class="fas fa-rocket" style="font-size: 4rem; margin-bottom: 1rem;"></i>
+            <h3 style="font-size: 2rem; margin-bottom: 0.5rem;">500+</h3>
+            <p>Projects Launched</p>
+        </div>
+    </div>
+    
+    <!-- Team Section -->
+    <h2 style="font-size: 2rem; color: var(--text-dark); text-align: center; margin-bottom: 2rem;">Meet Our Team</h2>
+    <div class="grid">
+        <div class="card" style="text-align: center;">
+            <img src="https://via.placeholder.com/150" alt="Team Member" style="width: 150px; height: 150px; border-radius: 50%; margin-bottom: 1rem; border: 4px solid var(--primary-color);">
+            <h3>John Doe</h3>
+            <p style="color: var(--primary-color); margin-bottom: 0.5rem;">Founder & CEO</p>
+            <p style="color: var(--text-light);">10+ years of experience in web development</p>
+        </div>
+        
+        <div class="card" style="text-align: center;">
+            <img src="https://via.placeholder.com/150" alt="Team Member" style="width: 150px; height: 150px; border-radius: 50%; margin-bottom: 1rem; border: 4px solid var(--primary-color);">
+            <h3>Jane Smith</h3>
+            <p style="color: var(--primary-color); margin-bottom: 0.5rem;">Lead Developer</p>
+            <p style="color: var(--text-light);">Django expert and open source contributor</p>
+        </div>
+        
+        <div class="card" style="text-align: center;">
+            <img src="https://via.placeholder.com/150" alt="Team Member" style="width: 150px; height: 150px; border-radius: 50%; margin-bottom: 1rem; border: 4px solid var(--primary-color);">
+            <h3>Mike Johnson</h3>
+            <p style="color: var(--primary-color); margin-bottom: 0.5rem;">UI/UX Designer</p>
+            <p style="color: var(--text-light);">Creating beautiful and intuitive interfaces</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

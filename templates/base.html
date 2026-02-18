@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MyApp Pro{% endblock %}</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-rocket"></i> MyApp Pro
+        </div>
+        
+        <div class="nav-links">
+            <a href="/"><i class="fas fa-home"></i> Home</a>
+            <a href="/about/"><i class="fas fa-info-circle"></i> About</a>
+            <a href="/contact/"><i class="fas fa-envelope"></i> Contact</a>
+            
+            {% if user.is_authenticated %}
+                <div class="user-menu" onclick="toggleSidebar()">
+                    <div class="user-avatar">
+                        {{ user.username|first|upper }}
+                    </div>
+                    <span>{{ user.username }}</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            {% else %}
+                <a href="/login/" class="btn btn-primary">Login</a>
+                <a href="/signup/" class="btn btn-secondary">Signup</a>
+            {% endif %}
+        </div>
+    </nav>
+    
+    <div class="main-container">
+        <!-- Sidebar (only for authenticated users) -->
+        {% if user.is_authenticated %}
+        <div class="sidebar" id="sidebar">
+            <ul class="sidebar-menu">
+                <li class="sidebar-item {% if request.path == '/dashboard/' %}active{% endif %}">
+                    <a href="/dashboard/"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                </li>
+                <li class="sidebar-item {% if request.path == '/profile/' %}active{% endif %}">
+                    <a href="/profile/"><i class="fas fa-user"></i> Profile</a>
+                </li>
+                <li class="sidebar-item {% if request.path == '/settings/' %}active{% endif %}">
+                    <a href="/settings/"><i class="fas fa-cog"></i> Settings</a>
+                </li>
+                <li class="sidebar-item {% if request.path == '/notifications/' %}active{% endif %}">
+                    <a href="/notifications/"><i class="fas fa-bell"></i> Notifications</a>
+                </li>
+                <li class="sidebar-item {% if request.path == '/analytics/' %}active{% endif %}">
+                    <a href="/analytics/"><i class="fas fa-chart-line"></i> Analytics</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="/logout/"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </li>
+            </ul>
+        </div>
+        {% endif %}
+        
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Messages -->
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    <i class="fas fa-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'error' %}exclamation-circle{% else %}info-circle{% endif %}"></i>
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+    
+    <!-- Custom JS -->
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

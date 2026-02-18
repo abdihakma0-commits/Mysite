@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Home - MyApp Pro{% endblock %}
+
+{% block content %}
+<div style="text-align: center; padding: 4rem 0;">
+    <h1 style="font-size: 3rem; margin-bottom: 1rem; color: #333;">Welcome to MyApp Pro</h1>
+    <p style="font-size: 1.2rem; color: #666; max-width: 600px; margin: 0 auto 2rem;">
+        A modern, professional platform built with Django. Experience the power of professional web development.
+    </p>
+    
+    {% if not user.is_authenticated %}
+    <div style="display: flex; gap: 1rem; justify-content: center;">
+        <a href="/signup/" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem 2rem;">
+            <i class="fas fa-user-plus"></i> Get Started
+        </a>
+        <a href="/login/" class="btn btn-secondary" style="font-size: 1.1rem; padding: 1rem 2rem;">
+            <i class="fas fa-sign-in-alt"></i> Login
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
+    <div class="card" style="text-align: center;">
+        <i class="fas fa-bolt" style="font-size: 3rem; color: #667eea; margin-bottom: 1rem;"></i>
+        <h3 style="margin-bottom: 1rem;">Lightning Fast</h3>
+        <p style="color: #666;">Optimized performance with Django's powerful backend.</p>
+    </div>
+    
+    <div class="card" style="text-align: center;">
+        <i class="fas fa-shield-alt" style="font-size: 3rem; color: #667eea; margin-bottom: 1rem;"></i>
+        <h3 style="margin-bottom: 1rem;">Secure</h3>
+        <p style="color: #666;">Enterprise-grade security with Django's built-in protections.</p>
+    </div>
+    
+    <div class="card" style="text-align: center;">
+        <i class="fas fa-mobile-alt" style="font-size: 3rem; color: #667eea; margin-bottom: 1rem;"></i>
+        <h3 style="margin-bottom: 1rem;">Responsive</h3>
+        <p style="color: #666;">Beautiful design that works on all devices.</p>
+    </div>
+</div>
+{% endblock %}

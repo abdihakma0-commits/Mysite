@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Contact Us - MyApp Pro{% endblock %}
+
+{% block extra_css %}
+<style>
+    .contact-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .contact-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    
+    .contact-header h1 {
+        font-size: 2.5rem;
+        color: var(--text-dark);
+        margin-bottom: 1rem;
+    }
+    
+    .contact-header p {
+        color: var(--text-light);
+        font-size: 1.1rem;
+    }
+    
+    .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+    }
+    
+    .contact-info {
+        background: white;
+        border-radius: 20px;
+        padding: 2.5rem;
+        box-shadow: var(--shadow);
+    }
+    
+    .contact-info h3 {
+        color: var(--text-dark);
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+    }
+    
+    .info-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 12px;
+        transition: transform 0.3s;
+    }
+    
+    .info-item:hover {
+        transform: translateX(5px);
+    }
+    
+    .info-icon {
+        width: 50px;
+        height: 50px;
+        background: var(--primary-gradient);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .info-icon i {
+        color: white;
+        font-size: 1.5rem;
+    }
+    
+    .info-content h4 {
+        color: var(--text-dark);
+        margin-bottom: 0.3rem;
+    }
+    
+    .info-content p {
+        color: var(--text-light);
+    }
+    
+    .contact-form {
+        background: white;
+        border-radius: 20px;
+        padding: 2.5rem;
+        box-shadow: var(--shadow);
+    }
+    
+    .contact-form h3 {
+        color: var(--text-dark);
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+    }
+    
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+    
+    .map-container {
+        margin-top: 3rem;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+    }
+    
+    @media (max-width: 768px) {
+        .contact-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="contact-container">
+    <div class="contact-header">
+        <h1>Get in Touch</h1>
+        <p>Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+    </div>
+    
+    <div class="contact-grid">
+        <!-- Contact Information -->
+        <div class="contact-info">
+            <h3><i class="fas fa-info-circle" style="color: var(--primary-color); margin-right: 0.5rem;"></i>Contact Information</h3>
+            
+            <div class="info-item">
+                <div class="info-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="info-content">
+                    <h4>Address</h4>
+                    <p>123 Business Street, Suite 100<br>New York, NY 10001</p>
+                </div>
+            </div>
+            
+            <div class="info-item">
+                <div class="info-icon">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <div class="info-content">
+                    <h4>Phone</h4>
+                    <p>+1 (555) 123-4567</p>
+                    <p>Mon-Fri, 9am-6pm EST</p>
+                </div>
+            </div>
+            
+            <div class="info-item">
+                <div class="info-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="info-content">
+                    <h4>Email</h4>
+                    <p>support@myapppro.com</p>
+                    <p>info@myapppro.com</p>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                <a href="#" style="width: 40px; height: 40px; background: #f0f2f5; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary-color); transition: all 0.3s;">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" style="width: 40px; height: 40px; background: #f0f2f5; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary-color); transition: all 0.3s;">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" style="width: 40px; height: 40px; background: #f0f2f5; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary-color); transition: all 0.3s;">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="#" style="width: 40px; height: 40px; background: #f0f2f5; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary-color); transition: all 0.3s;">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Contact Form -->
+        <div class="contact-form">
+            <h3><i class="fas fa-paper-plane" style="color: var(--primary-color); margin-right: 0.5rem;"></i>Send Message</h3>
+            
+            <form method="POST">
+                {% csrf_token %}
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" class="form-control" id="name" name="name" required placeholder="John Doe">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" class="form-control" id="email" name="email" required placeholder="john@example.com">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" class="form-control" id="subject" name="subject" required placeholder="How can we help?">
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea class="form-control" id="message" name="message" rows="5" required placeholder="Your message here..."></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Map -->
+    <div class="map-container">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193595.9147703055!2d-74.119763973046!3d40.69740344195777!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2s!4v1645564623456!5m2!1sen!2s" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+</div>
+{% endblock %}
