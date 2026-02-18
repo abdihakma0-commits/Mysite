@@ -1,0 +1,99 @@
+/* Hakimu Official Admin Custom Styles */
+
+:root {
+    --primary-color: #667eea;
+    --secondary-color: #764ba2;
+    --accent-color: #f6993f;
+}
+
+/* Header */
+#header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 15px 40px;
+    border-bottom: none;
+}
+
+#header a {
+    color: white;
+}
+
+#branding h1 {
+    color: white;
+    font-weight: 600;
+}
+
+/* Module headers */
+.module h2, .module caption {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 10px;
+}
+
+/* Buttons */
+.button, input[type=submit], input[type=button] {
+    background: var(--primary-color);
+    border: none;
+    border-radius: 4px;
+    padding: 8px 15px;
+    color: white;
+}
+
+.button:hover, input[type=submit]:hover, input[type=button]:hover {
+    background: var(--secondary-color);
+}
+
+/* Links */
+a:link, a:visited {
+    color: var(--primary-color);
+}
+
+/* Dashboard */
+.dashboard .module table th {
+    background: #f8f9fa;
+}
+
+/* Login page */
+.login #header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+}
+
+.login #content {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* Tables */
+#result_list {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+#result_list thead th {
+    background: #f8f9fa;
+    color: #333;
+    font-weight: 600;
+}
+
+/* Pagination */
+.paginator {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.paginator a {
+    background: white;
+    border: 1px solid #dee2e6;
+    padding: 5px 12px;
+    margin: 0 2px;
+    border-radius: 4px;
+}
+
+.paginator a:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
