@@ -1,5 +1,6 @@
 """
-Main URL Configuration for MyApp Pro
+Main URL Configuration for Hakimu Official
+Includes all apps: core, blog, and hakimu_ai_chat
 """
 from django.contrib import admin
 from django.urls import path, include
@@ -7,10 +8,17 @@ from django.conf import settings
 from django.conf.urls.static import static
 from core import views
 
+# Custom admin site configuration
+admin.site.site_header = "Hakimu Official Administration"
+admin.site.site_title = "Hakimu Admin Portal"
+admin.site.index_title = "Welcome to Hakimu Dashboard"
+admin.site.site_url = "https://hakimu.onrender.com"
+
 # URL Patterns
 urlpatterns = [
-    # Admin
+    # ==================== ADMIN ====================
     path('admin/', admin.site.urls),
+    path('hakimu-admin/', admin.site.urls),  # Alternative admin URL
     
     # ==================== PUBLIC PAGES ====================
     path('', views.home_view, name='home'),
@@ -33,8 +41,11 @@ urlpatterns = [
     path('analytics/', views.analytics_view, name='analytics'),
     
     # ==================== BLOG APP ====================
-    # Make sure 'blog' is in INSTALLED_APPS in settings.py
     path('blog/', include('blog.urls')),
+    
+    # ==================== AI CHAT APP ====================
+    path('ai-chat/', include('hakimu_ai_chat.urls')),
+    path('chat/', include('hakimu_ai_chat.urls')),  # Alternative short URL
 ]
 
 # Serve static and media files in development
@@ -42,7 +53,7 @@ if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# Custom error handlers
+# ==================== CUSTOM ERROR HANDLERS ====================
 handler404 = 'core.views.custom_404'
 handler500 = 'core.views.custom_500'
 handler403 = 'core.views.custom_403'

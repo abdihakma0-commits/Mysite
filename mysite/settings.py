@@ -1,6 +1,8 @@
 """
 Django settings for mysite project.
+Hakimu Official - Complete Configuration
 """
+
 from pathlib import Path
 from decouple import config
 import dj_database_url
@@ -10,19 +12,24 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # =========================
-# SECURITY
+# SECURITY WARNINGS
 # =========================
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-default-key-change-this')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1').split(',')
-ALLOWED_HOSTS.extend(['.onrender.com', 'localhost', '127.0.0.1'])
+ALLOWED_HOSTS.extend([
+    '.onrender.com',
+    'localhost', 
+    '127.0.0.1',
+    'hakimu.onrender.com',
+])
 
 # =========================
-# APPLICATIONS
+# APPLICATION DEFINITION
 # =========================
 INSTALLED_APPS = [
-    # Django built-in
+    # Django built-in apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -30,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    # Third-party
+    # Third-party apps
     'crispy_forms',
     'crispy_bootstrap5',
     'widget_tweaks',
@@ -38,6 +45,7 @@ INSTALLED_APPS = [
     # Local apps
     'core',
     'blog',
+    'hakimu_ai_chat',  # NEW: AI Chat app
 ]
 
 MIDDLEWARE = [
@@ -59,7 +67,9 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [
+            BASE_DIR / 'templates',  # Main templates folder
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -78,7 +88,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # DATABASE - SQLite for development, PostgreSQL for production with fallback
 # =========================
 if DEBUG:
-    # Local development - always use SQLite
+    # Local development - SQLite
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -89,39 +99,49 @@ if DEBUG:
 else:
     # Production on Render - try PostgreSQL, fall back to SQLite
     try:
-        # Try to use PostgreSQL if DATABASE_URL exists
         DATABASES = {
             'default': dj_database_url.config(
                 default=config('DATABASE_URL'),
                 conn_max_age=600,
+                conn_health_checks=True,
             )
         }
         print("🐘 Using PostgreSQL database for production")
     except:
-        # Fall back to SQLite if DATABASE_URL not set
         DATABASES = {
             'default': {
                 'ENGINE': 'django.db.backends.sqlite3',
                 'NAME': BASE_DIR / 'db.sqlite3',
             }
         }
-        print("⚠️ DATABASE_URL not found, using SQLite as fallback for production")
+        print("⚠️ DATABASE_URL not found, using SQLite as fallback")
 
 # =========================
 # PASSWORD VALIDATION
 # =========================
 AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', 'OPTIONS': {'min_length': 8}},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 8,
+        }
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
 ]
 
 # =========================
 # INTERNATIONALIZATION
 # =========================
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Nairobi'  # Set to Nairobi time
 USE_I18N = True
 USE_TZ = True
 
@@ -154,7 +174,7 @@ LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/login/'
 
 # =========================
-# EMAIL
+# EMAIL CONFIGURATION
 # =========================
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -166,7 +186,13 @@ else:
     EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
     EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 
-CONTACT_EMAIL = [config('EMAIL_HOST_USER', default='admin@example.com')]
+CONTACT_EMAIL = [config('EMAIL_HOST_USER', default='abdihakma2091@gmail.com')]
+
+# =========================
+# GEMINI AI API CONFIGURATION
+# =========================
+GEMINI_API_KEY = config('GEMINI_API_KEY', default='AIzaSyAlsB4xbhp2E9DWD5QWs1UKzKOTrJFoIik')
+GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent'
 
 # =========================
 # CRISPY FORMS
@@ -189,17 +215,27 @@ MESSAGE_TAGS = {
 # SECURITY SETTINGS (Production only)
 # =========================
 if not DEBUG:
+    # HTTPS settings
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-    SECURE_HSTS_SECONDS = 31536000
+    
+    # HSTS settings
+    SECURE_HSTS_SECONDS = 31536000  # 1 year
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
+    
+    # Other security settings
     SECURE_CONTENT_TYPE_NOSNIFF = True
     SECURE_BROWSER_XSS_FILTER = True
     X_FRAME_OPTIONS = 'DENY'
     
+    # Trusted origins for CSRF
     CSRF_TRUSTED_ORIGINS = [
         'https://*.onrender.com',
         'https://*.render.com',
+        'https://hakimu.onrender.com',
     ]
+    
+    # Security headers
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
