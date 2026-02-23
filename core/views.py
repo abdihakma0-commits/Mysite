@@ -12,10 +12,22 @@ def about_view(request):
     return render(request, "pages/about.html")
 
 def contact_view(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        message = request.POST.get("message")
+        messages.success(request, f"Thank you {name}! Your message has been sent.")
+        return redirect("contact")
     return render(request, "pages/contact.html")
 
 def faq_view(request):
     return render(request, "pages/faq.html")
+
+def features_view(request):
+    return render(request, "pages/features.html")
+
+def pricing_view(request):
+    return render(request, "pages/pricing.html")
 
 # Authentication
 def login_view(request):
@@ -29,7 +41,7 @@ def login_view(request):
         
         if user:
             login(request, user)
-            messages.success(request, f"Welcome back, {username}! 🚀")
+            messages.success(request, f"Welcome back, {username}!")
             return redirect("dashboard")
         else:
             messages.error(request, "Invalid username or password")
@@ -60,7 +72,7 @@ def signup_view(request):
 
         user = User.objects.create_user(username=username, email=email, password=password)
         login(request, user)
-        messages.success(request, f"Welcome to Hakimu, {username}! 🎉")
+        messages.success(request, f"Welcome to Hakimu, {username}!")
         return redirect("dashboard")
 
     return render(request, "auth/signup.html")
@@ -69,6 +81,12 @@ def logout_view(request):
     logout(request)
     messages.info(request, "You have been logged out successfully")
     return redirect("login")
+
+def password_reset_view(request):
+    return render(request, "auth/password_reset.html")
+
+def password_change_view(request):
+    return render(request, "auth/password_change.html")
 
 # Dashboard
 @login_required
@@ -90,3 +108,13 @@ def notifications_view(request):
 @login_required
 def analytics_view(request):
     return render(request, "dashboard/analytics.html")
+
+# Error handlers
+def custom_404(request, exception):
+    return render(request, "errors/404.html", status=404)
+
+def custom_500(request):
+    return render(request, "errors/500.html", status=500)
+
+def custom_403(request, exception):
+    return render(request, "errors/403.html", status=403)

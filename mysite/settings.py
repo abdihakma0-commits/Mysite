@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     # Local apps
     'core',
     'blog',
-    'hakimu_ai_chat',  # NEW: AI Chat app
+    'hakimu_ai_chat',  # AI Chat app
 ]
 
 MIDDLEWARE = [
@@ -68,7 +68,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / 'templates',  # Main templates folder
+            BASE_DIR / 'templates',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -85,28 +85,25 @@ TEMPLATES = [
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # =========================
-# DATABASE - SQLite for development, PostgreSQL for production with fallback
+# DATABASE
 # =========================
 if DEBUG:
-    # Local development - SQLite
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-    print("📊 Using SQLite database for development")
+    print("Using SQLite database for development")
 else:
-    # Production on Render - try PostgreSQL, fall back to SQLite
     try:
         DATABASES = {
             'default': dj_database_url.config(
                 default=config('DATABASE_URL'),
                 conn_max_age=600,
-                conn_health_checks=True,
             )
         }
-        print("🐘 Using PostgreSQL database for production")
+        print("Using PostgreSQL database for production")
     except:
         DATABASES = {
             'default': {
@@ -114,7 +111,7 @@ else:
                 'NAME': BASE_DIR / 'db.sqlite3',
             }
         }
-        print("⚠️ DATABASE_URL not found, using SQLite as fallback")
+        print("DATABASE_URL not found, using SQLite as fallback")
 
 # =========================
 # PASSWORD VALIDATION
@@ -141,12 +138,12 @@ AUTH_PASSWORD_VALIDATORS = [
 # INTERNATIONALIZATION
 # =========================
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'Africa/Nairobi'  # Set to Nairobi time
+TIME_ZONE = 'Africa/Nairobi'
 USE_I18N = True
 USE_TZ = True
 
 # =========================
-# STATIC FILES (CSS, JavaScript, Images)
+# STATIC FILES
 # =========================
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
@@ -156,7 +153,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # =========================
-# MEDIA FILES (User uploaded)
+# MEDIA FILES
 # =========================
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -192,7 +189,6 @@ CONTACT_EMAIL = [config('EMAIL_HOST_USER', default='abdihakma2091@gmail.com')]
 # GEMINI AI API CONFIGURATION
 # =========================
 GEMINI_API_KEY = config('GEMINI_API_KEY', default='AIzaSyAlsB4xbhp2E9DWD5QWs1UKzKOTrJFoIik')
-GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent'
 
 # =========================
 # CRISPY FORMS
@@ -215,27 +211,17 @@ MESSAGE_TAGS = {
 # SECURITY SETTINGS (Production only)
 # =========================
 if not DEBUG:
-    # HTTPS settings
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-    
-    # HSTS settings
-    SECURE_HSTS_SECONDS = 31536000  # 1 year
+    SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
-    
-    # Other security settings
     SECURE_CONTENT_TYPE_NOSNIFF = True
     SECURE_BROWSER_XSS_FILTER = True
     X_FRAME_OPTIONS = 'DENY'
     
-    # Trusted origins for CSRF
     CSRF_TRUSTED_ORIGINS = [
         'https://*.onrender.com',
-        'https://*.render.com',
         'https://hakimu.onrender.com',
     ]
-    
-    # Security headers
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
