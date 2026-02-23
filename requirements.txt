@@ -1,23 +1,21 @@
-# Core Django
-Django==4.2.7
-
-# Environment variables
-python-decouple==3.8
-
-# Form styling
-django-crispy-forms==2.1
+asgiref==3.11.1
+certifi==2026.1.4
+charset-normalizer==3.4.4
 crispy-bootstrap5==2023.10
-django-widget-tweaks==1.5.0
-
-# Production server
-gunicorn==21.2.0
-
-# Static files in production
-whitenoise==6.6.0
-
-# Database
 dj-database-url==2.1.0
+Django==4.2.7
+django-crispy-forms==2.1
+django-extensions==4.1
+django-widget-tweaks==1.5.0
+gunicorn==21.2.0
+idna==3.11
+packaging==26.0
+Pillow==10.1.0
 psycopg2-binary==2.9.9
-
-# Image handling - Updated for Python 3.14 compatibility
-Pillow==11.0.0
+python-decouple==3.8
+requests==2.32.5
+sqlparse==0.5.5
+typing_extensions==4.15.0
+tzdata==2025.3
+urllib3==2.6.3
+whitenoise==6.6.0

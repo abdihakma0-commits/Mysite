@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 import json
-import requests
+import requests  # This was missing
 import time
 
 # Store temporary chat history in memory
