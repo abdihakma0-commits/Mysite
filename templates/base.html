@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Hakimu - Space Legal Tech{% endblock %}</title>
+    <title>{% block title %}Hakimu Official{% endblock %}</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -13,21 +13,27 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     
     <style>
-        body {
+        * {
             margin: 0;
             padding: 0;
-            font-family: 'Space Grotesk', sans-serif;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
             background: #030014;
             color: white;
             overflow-x: hidden;
+            position: relative;
         }
         
+        /* 3D Canvas Container */
         #canvas-container {
             position: fixed;
             top: 0;
@@ -37,13 +43,29 @@
             z-index: -1;
         }
         
-        .glass-effect {
+        /* Glassmorphism Effects */
+        .glass {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 24px;
         }
         
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 24px;
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(66, 153, 225, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Navbar */
         .navbar {
             position: fixed;
             top: 20px;
@@ -61,8 +83,37 @@
         }
         
         @keyframes slideDown {
-            from { transform: translate(-50%, -100%); opacity: 0; }
-            to { transform: translate(-50%, 0); opacity: 1; }
+            from {
+                transform: translate(-50%, -100%);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #4299e1, #9f7aea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo i {
+            font-size: 1.8rem;
+            color: #4299e1;
+            -webkit-text-fill-color: initial;
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
         }
         
         .nav-link {
@@ -71,11 +122,11 @@
             font-weight: 500;
             transition: all 0.3s;
             position: relative;
+            font-size: 1rem;
         }
         
         .nav-link:hover {
             color: white;
-            text-shadow: 0 0 10px rgba(66, 153, 225, 0.5);
         }
         
         .nav-link::after {
@@ -93,10 +144,11 @@
             width: 100%;
         }
         
+        /* Buttons */
         .btn-primary {
             background: linear-gradient(135deg, #4299e1, #9f7aea);
             color: white;
-            padding: 0.75rem 2rem;
+            padding: 0.5rem 1.5rem;
             border-radius: 50px;
             font-weight: 600;
             text-decoration: none;
@@ -114,65 +166,85 @@
         .btn-secondary {
             background: rgba(255, 255, 255, 0.1);
             color: white;
-            padding: 0.75rem 2rem;
+            padding: 0.5rem 1.5rem;
             border-radius: 50px;
             font-weight: 600;
             text-decoration: none;
             transition: all 0.3s;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            display: inline-block;
         }
         
         .btn-secondary:hover {
             background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.3);
         }
         
-        .space-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 30px;
-            padding: 2rem;
+        /* User Menu */
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.3rem 1rem 0.3rem 0.3rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            cursor: pointer;
             transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
         }
         
-        .space-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(66, 153, 225, 0.1) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s;
-            transform: rotate(45deg);
+        .user-menu:hover {
+            border-color: #4299e1;
         }
         
-        .space-card:hover::before {
-            opacity: 1;
-            animation: rotate 10s linear infinite;
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #4299e1, #9f7aea);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
         }
         
-        .space-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            border-color: rgba(66, 153, 225, 0.3);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        .user-name {
+            color: white;
+            font-weight: 500;
         }
         
-        @keyframes rotate {
-            from { transform: rotate(45deg); }
-            to { transform: rotate(405deg); }
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            color: white;
+            cursor: pointer;
         }
         
+        #mobileMenu {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            background: rgba(3, 0, 20, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 1.5rem;
+            z-index: 999;
+        }
+        
+        #mobileMenu.active {
+            display: block;
+        }
+        
+        /* Welcome Message */
         .welcome-message {
             background: linear-gradient(135deg, rgba(66, 153, 225, 0.1), rgba(159, 122, 234, 0.1));
             border-left: 4px solid #4299e1;
+            border-radius: 12px;
             padding: 1.5rem;
-            border-radius: 16px;
             margin-bottom: 2rem;
             animation: glowPulse 2s infinite;
         }
@@ -182,36 +254,72 @@
             50% { box-shadow: 0 0 40px rgba(66, 153, 225, 0.4); }
         }
         
-        .mobile-menu {
-            display: none;
+        /* Main Content */
+        .main-content {
+            padding-top: 100px;
+            min-height: 100vh;
         }
         
+        /* Messages */
+        .messages-container {
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+            padding: 0 1rem;
+        }
+        
+        .alert {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .alert-success {
+            border-color: #48bb78;
+        }
+        
+        .alert-error {
+            border-color: #f56565;
+        }
+        
+        .alert-info {
+            border-color: #4299e1;
+        }
+        
+        /* Responsive */
         @media (max-width: 768px) {
-            .navbar {
-                padding: 0.75rem 1.5rem;
-            }
-            
             .nav-links {
                 display: none;
             }
             
-            .mobile-menu {
+            .mobile-menu-btn {
                 display: block;
             }
             
-            .mobile-menu.active {
-                position: fixed;
-                top: 80px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 90%;
-                background: rgba(3, 0, 20, 0.95);
-                backdrop-filter: blur(10px);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                border-radius: 20px;
+            .navbar {
                 padding: 1rem;
-                z-index: 999;
             }
+            
+            .logo span {
+                display: none;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
         }
     </style>
 </head>
@@ -220,85 +328,94 @@
     <div id="canvas-container"></div>
 
     <!-- Navbar -->
-    <nav class="navbar flex justify-between items-center">
-        <div class="flex items-center space-x-2">
-            <i class="fas fa-gavel text-2xl text-blue-400"></i>
-            <span class="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                Hakimu
-            </span>
-        </div>
+    <nav class="navbar">
+        <div class="flex items-center justify-between w-full">
+            <div class="logo">
+                <i class="fas fa-gavel"></i>
+                <span>Hakimu</span>
+            </div>
 
-        <!-- Desktop Navigation -->
-        <div class="nav-links flex items-center space-x-8">
-            <a href="/" class="nav-link">Home</a>
-            <a href="/about/" class="nav-link">About</a>
-            <a href="/contact/" class="nav-link">Contact</a>
-            
-            {% if user.is_authenticated %}
-                <a href="/dashboard/" class="nav-link">Dashboard</a>
-                <a href="/ai-chat/" class="nav-link">
-                    <i class="fas fa-robot mr-1"></i>AI Chat
-                </a>
-                <div class="flex items-center space-x-2">
-                    <div class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 flex items-center justify-center">
-                        <span class="text-sm font-bold">{{ user.username|first|upper }}</span>
+            <!-- Desktop Navigation -->
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/about/" class="nav-link">About</a>
+                <a href="/contact/" class="nav-link">Contact</a>
+                
+                {% if user.is_authenticated %}
+                    <a href="/dashboard/" class="nav-link">Dashboard</a>
+                    <a href="/ai-chat/" class="nav-link">
+                        <i class="fas fa-robot mr-1"></i>AI Chat
+                    </a>
+                    <a href="/blog/" class="nav-link">Blog</a>
+                    
+                    <!-- User Menu -->
+                    <div class="user-menu" onclick="toggleSidebar()">
+                        <div class="user-avatar">
+                            {{ user.username|first|upper }}
+                        </div>
+                        <span class="user-name">{{ user.username }}</span>
+                        <i class="fas fa-chevron-down text-xs ml-1"></i>
                     </div>
-                    <span class="text-gray-300">{{ user.username }}</span>
-                </div>
-                <a href="/logout/" class="btn-secondary text-sm py-2 px-4">Logout</a>
-            {% else %}
-                <a href="/login/" class="nav-link">Login</a>
-                <a href="/signup/" class="btn-primary">Get Started</a>
-            {% endif %}
-        </div>
+                    <a href="/logout/" class="btn-secondary">Logout</a>
+                {% else %}
+                    <a href="/login/" class="nav-link">Login</a>
+                    <a href="/signup/" class="btn-primary">Get Started</a>
+                {% endif %}
+            </div>
 
-        <!-- Mobile Menu Button -->
-        <button class="mobile-menu text-2xl text-white" onclick="toggleMobileMenu()">
-            <i class="fas fa-bars"></i>
-        </button>
+            <!-- Mobile Menu Button -->
+            <div class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
     </nav>
 
     <!-- Mobile Menu -->
-    <div id="mobileMenu" class="hidden">
+    <div id="mobileMenu">
         <div class="flex flex-col space-y-4">
-            <a href="/" class="nav-link text-lg">Home</a>
-            <a href="/about/" class="nav-link text-lg">About</a>
-            <a href="/contact/" class="nav-link text-lg">Contact</a>
+            <a href="/" class="nav-link text-lg" onclick="toggleMobileMenu()">Home</a>
+            <a href="/about/" class="nav-link text-lg" onclick="toggleMobileMenu()">About</a>
+            <a href="/contact/" class="nav-link text-lg" onclick="toggleMobileMenu()">Contact</a>
             
             {% if user.is_authenticated %}
-                <a href="/dashboard/" class="nav-link text-lg">Dashboard</a>
-                <a href="/ai-chat/" class="nav-link text-lg">AI Chat</a>
+                <a href="/dashboard/" class="nav-link text-lg" onclick="toggleMobileMenu()">Dashboard</a>
+                <a href="/ai-chat/" class="nav-link text-lg" onclick="toggleMobileMenu()">
+                    <i class="fas fa-robot mr-1"></i>AI Chat
+                </a>
+                <a href="/blog/" class="nav-link text-lg" onclick="toggleMobileMenu()">Blog</a>
+                
                 <div class="flex items-center space-x-2 py-2">
-                    <div class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 flex items-center justify-center">
-                        <span class="text-sm font-bold">{{ user.username|first|upper }}</span>
+                    <div class="user-avatar">
+                        {{ user.username|first|upper }}
                     </div>
-                    <span class="text-gray-300">{{ user.username }}</span>
+                    <span class="text-white">{{ user.username }}</span>
                 </div>
-                <a href="/logout/" class="btn-secondary text-center">Logout</a>
+                
+                <a href="/logout/" class="btn-secondary text-center" onclick="toggleMobileMenu()">Logout</a>
             {% else %}
-                <a href="/login/" class="btn-secondary text-center">Login</a>
-                <a href="/signup/" class="btn-primary text-center">Get Started</a>
+                <a href="/login/" class="btn-secondary text-center" onclick="toggleMobileMenu()">Login</a>
+                <a href="/signup/" class="btn-primary text-center" onclick="toggleMobileMenu()">Get Started</a>
             {% endif %}
         </div>
     </div>
 
     <!-- Main Content -->
-    <main class="pt-32 px-4">
+    <main class="main-content">
         <!-- Messages -->
         {% if messages %}
-        <div class="max-w-7xl mx-auto mb-8">
+        <div class="messages-container">
             {% for message in messages %}
-            <div class="space-card p-4 mb-2 {% if message.tags == 'success' %}border-green-500/30{% elif message.tags == 'error' %}border-red-500/30{% endif %}">
-                <i class="fas fa-{% if message.tags == 'success' %}check-circle text-green-400{% elif message.tags == 'error' %}exclamation-circle text-red-400{% else %}info-circle text-blue-400{% endif %} mr-2"></i>
+            <div class="alert alert-{{ message.tags }} fade-in">
+                <i class="fas fa-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'error' %}exclamation-circle{% else %}info-circle{% endif %} mr-2"></i>
                 {{ message }}
             </div>
             {% endfor %}
         </div>
         {% endif %}
 
-        <!-- Welcome Message for Logged-in Users -->
+        <!-- Welcome Message for Logged-in Users on Home Page -->
         {% if user.is_authenticated and request.path == '/' %}
-        <div class="max-w-7xl mx-auto mb-8">
+        <div class="max-w-7xl mx-auto px-4 mb-8">
             <div class="welcome-message">
                 <div class="flex items-center">
                     <i class="fas fa-hand-wave text-3xl text-blue-400 mr-4"></i>
@@ -315,12 +432,18 @@
         {% block content %}{% endblock %}
     </main>
 
+    <!-- JavaScript -->
     <script>
         // Toggle Mobile Menu
         function toggleMobileMenu() {
             const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('hidden');
             menu.classList.toggle('active');
+        }
+
+        // Toggle Sidebar (if you have one)
+        function toggleSidebar() {
+            // Add your sidebar toggle logic here if needed
+            console.log('Sidebar toggled');
         }
 
         // Three.js Space Animation
@@ -414,11 +537,6 @@
                 orb.position.z += orb.userData.speedZ;
                 orb.rotation.x += orb.userData.rotationSpeed;
                 orb.rotation.y += orb.userData.rotationSpeed;
-
-                // Reset if out of bounds
-                if (Math.abs(orb.position.x) > 20) orb.position.x = (Math.random() - 0.5) * 20;
-                if (Math.abs(orb.position.y) > 20) orb.position.y = (Math.random() - 0.5) * 20;
-                if (Math.abs(orb.position.z) > 30) orb.position.z = (Math.random() - 0.5) * 30;
             });
 
             // Pulsing light
@@ -437,15 +555,25 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // Auto-hide messages
+        // Auto-hide messages after 5 seconds
         setTimeout(() => {
-            const messages = document.querySelectorAll('.space-card');
-            messages.forEach(msg => {
-                msg.style.transition = 'opacity 0.5s';
-                msg.style.opacity = '0';
-                setTimeout(() => msg.remove(), 500);
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                alert.style.transition = 'opacity 0.5s';
+                alert.style.opacity = '0';
+                setTimeout(() => alert.remove(), 500);
             });
         }, 5000);
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (event) => {
+            const menu = document.getElementById('mobileMenu');
+            const btn = document.querySelector('.mobile-menu-btn');
+            
+            if (menu && btn && !menu.contains(event.target) && !btn.contains(event.target)) {
+                menu.classList.remove('active');
+            }
+        });
     </script>
 </body>
 </html>
