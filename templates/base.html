@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Hakimu Official{% endblock %}</title>
+    <title>{% block title %}Hakimu - Space Legal Tech{% endblock %}</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -13,130 +13,437 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body class="bg-gray-900 text-white font-['Inter']">
-    <!-- Navbar -->
-    <nav class="bg-gray-800/50 backdrop-blur-md border-b border-gray-700 fixed w-full z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
-                <div class="flex items-center">
-                    <i class="fas fa-gavel text-blue-400 text-2xl mr-2"></i>
-                    <span class="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Hakimu</span>
-                </div>
-                
-                <!-- Desktop Navigation -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="/" class="text-gray-300 hover:text-white transition">Home</a>
-                    <a href="/about/" class="text-gray-300 hover:text-white transition">About</a>
-                    <a href="/contact/" class="text-gray-300 hover:text-white transition">Contact</a>
-                    
-                    {% if user.is_authenticated %}
-                        <a href="/dashboard/" class="text-gray-300 hover:text-white transition">Dashboard</a>
-                        <a href="/ai-chat/" class="text-gray-300 hover:text-white transition">
-                            <i class="fas fa-robot mr-1"></i>AI Chat
-                        </a>
-                        <div class="flex items-center space-x-2">
-                            <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
-                                <span class="text-sm font-bold">{{ user.username|first|upper }}</span>
-                            </div>
-                            <span class="text-gray-300">{{ user.username }}</span>
-                        </div>
-                        <a href="/logout/" class="bg-red-500/10 text-red-400 px-4 py-2 rounded-lg hover:bg-red-500/20 transition">
-                            Logout
-                        </a>
-                    {% else %}
-                        <a href="/login/" class="bg-blue-500/10 text-blue-400 px-4 py-2 rounded-lg hover:bg-blue-500/20 transition">Login</a>
-                        <a href="/signup/" class="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-lg hover:opacity-90 transition">Sign Up</a>
-                    {% endif %}
-                </div>
-                
-                <!-- Mobile menu button -->
-                <button class="md:hidden text-gray-300" onclick="toggleMobileMenu()">
-                    <i class="fas fa-bars text-2xl"></i>
-                </button>
-            </div>
-        </div>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Space Grotesk', sans-serif;
+            background: #030014;
+            color: white;
+            overflow-x: hidden;
+        }
         
-        <!-- Mobile Navigation -->
-        <div id="mobileMenu" class="hidden md:hidden bg-gray-800 border-t border-gray-700 px-4 py-2">
-            <div class="flex flex-col space-y-3 py-3">
-                <a href="/" class="text-gray-300 hover:text-white transition px-2">Home</a>
-                <a href="/about/" class="text-gray-300 hover:text-white transition px-2">About</a>
-                <a href="/contact/" class="text-gray-300 hover:text-white transition px-2">Contact</a>
-                
-                {% if user.is_authenticated %}
-                    <a href="/dashboard/" class="text-gray-300 hover:text-white transition px-2">Dashboard</a>
-                    <a href="/ai-chat/" class="text-gray-300 hover:text-white transition px-2">
-                        <i class="fas fa-robot mr-1"></i>AI Chat
-                    </a>
-                    <div class="flex items-center space-x-2 px-2 py-2">
-                        <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
-                            <span class="text-sm font-bold">{{ user.username|first|upper }}</span>
-                        </div>
-                        <span class="text-gray-300">{{ user.username }}</span>
-                    </div>
-                    <a href="/logout/" class="bg-red-500/10 text-red-400 px-4 py-2 rounded-lg hover:bg-red-500/20 transition text-center">
-                        Logout
-                    </a>
-                {% else %}
-                    <a href="/login/" class="bg-blue-500/10 text-blue-400 px-4 py-2 rounded-lg hover:bg-blue-500/20 transition text-center">Login</a>
-                    <a href="/signup/" class="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-lg hover:opacity-90 transition text-center">Sign Up</a>
-                {% endif %}
-            </div>
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+        }
+        
+        .navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
+            background: rgba(3, 0, 20, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            padding: 1rem 2rem;
+            z-index: 1000;
+            animation: slideDown 0.8s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from { transform: translate(-50%, -100%); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
+        }
+        
+        .nav-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: white;
+            text-shadow: 0 0 10px rgba(66, 153, 225, 0.5);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #4299e1, #9f7aea);
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #4299e1, #9f7aea);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(66, 153, 225, 0.5);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: inline-block;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .space-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
+            padding: 2rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .space-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(66, 153, 225, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            transform: rotate(45deg);
+        }
+        
+        .space-card:hover::before {
+            opacity: 1;
+            animation: rotate 10s linear infinite;
+        }
+        
+        .space-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(66, 153, 225, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(45deg); }
+            to { transform: rotate(405deg); }
+        }
+        
+        .welcome-message {
+            background: linear-gradient(135deg, rgba(66, 153, 225, 0.1), rgba(159, 122, 234, 0.1));
+            border-left: 4px solid #4299e1;
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            animation: glowPulse 2s infinite;
+        }
+        
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(66, 153, 225, 0.2); }
+            50% { box-shadow: 0 0 40px rgba(66, 153, 225, 0.4); }
+        }
+        
+        .mobile-menu {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0.75rem 1.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .mobile-menu.active {
+                position: fixed;
+                top: 80px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 90%;
+                background: rgba(3, 0, 20, 0.95);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 20px;
+                padding: 1rem;
+                z-index: 999;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 3D Canvas Container -->
+    <div id="canvas-container"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+            <i class="fas fa-gavel text-2xl text-blue-400"></i>
+            <span class="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                Hakimu
+            </span>
         </div>
+
+        <!-- Desktop Navigation -->
+        <div class="nav-links flex items-center space-x-8">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/about/" class="nav-link">About</a>
+            <a href="/contact/" class="nav-link">Contact</a>
+            
+            {% if user.is_authenticated %}
+                <a href="/dashboard/" class="nav-link">Dashboard</a>
+                <a href="/ai-chat/" class="nav-link">
+                    <i class="fas fa-robot mr-1"></i>AI Chat
+                </a>
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 flex items-center justify-center">
+                        <span class="text-sm font-bold">{{ user.username|first|upper }}</span>
+                    </div>
+                    <span class="text-gray-300">{{ user.username }}</span>
+                </div>
+                <a href="/logout/" class="btn-secondary text-sm py-2 px-4">Logout</a>
+            {% else %}
+                <a href="/login/" class="nav-link">Login</a>
+                <a href="/signup/" class="btn-primary">Get Started</a>
+            {% endif %}
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu text-2xl text-white" onclick="toggleMobileMenu()">
+            <i class="fas fa-bars"></i>
+        </button>
     </nav>
 
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden">
+        <div class="flex flex-col space-y-4">
+            <a href="/" class="nav-link text-lg">Home</a>
+            <a href="/about/" class="nav-link text-lg">About</a>
+            <a href="/contact/" class="nav-link text-lg">Contact</a>
+            
+            {% if user.is_authenticated %}
+                <a href="/dashboard/" class="nav-link text-lg">Dashboard</a>
+                <a href="/ai-chat/" class="nav-link text-lg">AI Chat</a>
+                <div class="flex items-center space-x-2 py-2">
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 flex items-center justify-center">
+                        <span class="text-sm font-bold">{{ user.username|first|upper }}</span>
+                    </div>
+                    <span class="text-gray-300">{{ user.username }}</span>
+                </div>
+                <a href="/logout/" class="btn-secondary text-center">Logout</a>
+            {% else %}
+                <a href="/login/" class="btn-secondary text-center">Login</a>
+                <a href="/signup/" class="btn-primary text-center">Get Started</a>
+            {% endif %}
+        </div>
+    </div>
+
     <!-- Main Content -->
-    <main class="pt-16">
+    <main class="pt-32 px-4">
         <!-- Messages -->
         {% if messages %}
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div class="max-w-7xl mx-auto mb-8">
             {% for message in messages %}
-            <div class="bg-{% if message.tags == 'success' %}green{% elif message.tags == 'error' %}red{% else %}blue{% endif %}-500/10 border border-{% if message.tags == 'success' %}green{% elif message.tags == 'error' %}red{% else %}blue{% endif %}-500/20 text-{% if message.tags == 'success' %}green{% elif message.tags == 'error' %}red{% else %}blue{% endif %}-400 px-4 py-3 rounded-lg mb-2">
-                <i class="fas fa-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'error' %}exclamation-circle{% else %}info-circle{% endif %} mr-2"></i>
+            <div class="space-card p-4 mb-2 {% if message.tags == 'success' %}border-green-500/30{% elif message.tags == 'error' %}border-red-500/30{% endif %}">
+                <i class="fas fa-{% if message.tags == 'success' %}check-circle text-green-400{% elif message.tags == 'error' %}exclamation-circle text-red-400{% else %}info-circle text-blue-400{% endif %} mr-2"></i>
                 {{ message }}
             </div>
             {% endfor %}
         </div>
         {% endif %}
-        
+
         <!-- Welcome Message for Logged-in Users -->
         {% if user.is_authenticated and request.path == '/' %}
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div class="bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-l-4 border-blue-500 p-6 rounded-lg">
+        <div class="max-w-7xl mx-auto mb-8">
+            <div class="welcome-message">
                 <div class="flex items-center">
-                    <i class="fas fa-hand-wave text-blue-400 text-3xl mr-4"></i>
+                    <i class="fas fa-hand-wave text-3xl text-blue-400 mr-4"></i>
                     <div>
-                        <h2 class="text-2xl font-bold text-white">Welcome back, {{ user.username }}! 👋</h2>
-                        <p class="text-gray-400">Here's what's happening with your account today.</p>
+                        <h2 class="text-2xl font-bold">Welcome back, {{ user.username }}! 👋</h2>
+                        <p class="text-gray-400">Ready to continue your legal journey?</p>
                     </div>
                 </div>
             </div>
         </div>
         {% endif %}
-        
+
         <!-- Page Content -->
-        {% block content %}
-        {% endblock %}
+        {% block content %}{% endblock %}
     </main>
 
     <script>
+        // Toggle Mobile Menu
         function toggleMobileMenu() {
             const menu = document.getElementById('mobileMenu');
             menu.classList.toggle('hidden');
+            menu.classList.toggle('active');
         }
 
-        // Auto-hide messages after 5 seconds
-        setTimeout(function() {
-            const messages = document.querySelectorAll('.bg-green-500\\/10, .bg-red-500\\/10, .bg-blue-500\\/10');
-            messages.forEach(function(message) {
-                message.style.transition = 'opacity 0.5s';
-                message.style.opacity = '0';
-                setTimeout(function() {
-                    message.style.display = 'none';
-                }, 500);
+        // Three.js Space Animation
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+        // Create stars
+        const starsGeometry = new THREE.BufferGeometry();
+        const starsCount = 2000;
+        const starsPositions = new Float32Array(starsCount * 3);
+
+        for (let i = 0; i < starsCount * 3; i += 3) {
+            starsPositions[i] = (Math.random() - 0.5) * 200;
+            starsPositions[i + 1] = (Math.random() - 0.5) * 200;
+            starsPositions[i + 2] = (Math.random() - 0.5) * 200;
+        }
+
+        starsGeometry.setAttribute('position', new THREE.BufferAttribute(starsPositions, 3));
+
+        const starsMaterial = new THREE.PointsMaterial({
+            color: 0xffffff,
+            size: 0.2,
+            transparent: true,
+            blending: THREE.AdditiveBlending
+        });
+
+        const stars = new THREE.Points(starsGeometry, starsMaterial);
+        scene.add(stars);
+
+        // Create floating orbs
+        const orbs = [];
+        const orbColors = [0x4299e1, 0x9f7aea, 0xed64a6];
+        
+        for (let i = 0; i < 5; i++) {
+            const geometry = new THREE.SphereGeometry(0.5 + Math.random() * 1, 32, 32);
+            const material = new THREE.MeshPhongMaterial({
+                color: orbColors[Math.floor(Math.random() * orbColors.length)],
+                emissive: 0x222222,
+                transparent: true,
+                opacity: 0.3,
+                wireframe: true
+            });
+            const sphere = new THREE.Mesh(geometry, material);
+            
+            sphere.position.x = (Math.random() - 0.5) * 30;
+            sphere.position.y = (Math.random() - 0.5) * 30;
+            sphere.position.z = (Math.random() - 20) * 2;
+            
+            sphere.userData = {
+                speedX: (Math.random() - 0.5) * 0.01,
+                speedY: (Math.random() - 0.5) * 0.01,
+                speedZ: (Math.random() - 0.5) * 0.01,
+                rotationSpeed: (Math.random() - 0.5) * 0.01
+            };
+            
+            scene.add(sphere);
+            orbs.push(sphere);
+        }
+
+        // Add lights
+        const ambientLight = new THREE.AmbientLight(0x404040);
+        scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+        directionalLight.position.set(1, 1, 1);
+        scene.add(directionalLight);
+
+        const pointLight = new THREE.PointLight(0x4299e1, 1, 50);
+        pointLight.position.set(0, 0, 5);
+        scene.add(pointLight);
+
+        camera.position.z = 20;
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Rotate stars
+            stars.rotation.y += 0.0002;
+            stars.rotation.x += 0.0001;
+
+            // Animate orbs
+            orbs.forEach(orb => {
+                orb.position.x += orb.userData.speedX;
+                orb.position.y += orb.userData.speedY;
+                orb.position.z += orb.userData.speedZ;
+                orb.rotation.x += orb.userData.rotationSpeed;
+                orb.rotation.y += orb.userData.rotationSpeed;
+
+                // Reset if out of bounds
+                if (Math.abs(orb.position.x) > 20) orb.position.x = (Math.random() - 0.5) * 20;
+                if (Math.abs(orb.position.y) > 20) orb.position.y = (Math.random() - 0.5) * 20;
+                if (Math.abs(orb.position.z) > 30) orb.position.z = (Math.random() - 0.5) * 30;
+            });
+
+            // Pulsing light
+            const time = Date.now() * 0.001;
+            pointLight.intensity = 0.5 + Math.sin(time) * 0.3;
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Auto-hide messages
+        setTimeout(() => {
+            const messages = document.querySelectorAll('.space-card');
+            messages.forEach(msg => {
+                msg.style.transition = 'opacity 0.5s';
+                msg.style.opacity = '0';
+                setTimeout(() => msg.remove(), 500);
             });
         }, 5000);
     </script>

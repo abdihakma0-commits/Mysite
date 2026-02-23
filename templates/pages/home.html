@@ -5,103 +5,125 @@
 
 {% block content %}
 <!-- Hero Section -->
-<div class="relative overflow-hidden">
-    <!-- Background Gradient -->
-    <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-pink-900/20"></div>
-    
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
-        <div class="text-center">
-            <h1 class="text-4xl md:text-6xl font-bold mb-6">
-                <span class="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                    Welcome to Hakimu
-                </span>
-            </h1>
-            <p class="text-xl text-gray-400 mb-8 max-w-3xl mx-auto">
-                Your premier legal technology platform. Experience the future of legal services with AI-powered tools and professional expertise.
-            </p>
-            
-            {% if not user.is_authenticated %}
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="/signup/" class="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-8 py-3 rounded-lg font-semibold hover:opacity-90 transition transform hover:scale-105">
-                    Get Started Free
-                </a>
-                <a href="/about/" class="bg-gray-800 text-white px-8 py-3 rounded-lg font-semibold hover:bg-gray-700 transition">
-                    Learn More
-                </a>
-            </div>
-            {% else %}
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="/dashboard/" class="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-8 py-3 rounded-lg font-semibold hover:opacity-90 transition">
-                    Go to Dashboard
-                </a>
-                <a href="/ai-chat/" class="bg-gray-800 text-white px-8 py-3 rounded-lg font-semibold hover:bg-gray-700 transition">
-                    <i class="fas fa-robot mr-2"></i>Try AI Chat
-                </a>
-            </div>
-            {% endif %}
+<div class="min-h-[80vh] flex items-center justify-center">
+    <div class="text-center max-w-5xl mx-auto">
+        <div class="inline-block px-4 py-2 space-card mb-8">
+            <span class="text-blue-400">✨ Welcome to the Future of Law</span>
         </div>
+        
+        <h1 class="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+            Hakimu
+        </h1>
+        
+        <p class="text-xl md:text-2xl text-gray-400 mb-12 max-w-3xl mx-auto">
+            Experience legal technology from another dimension. 
+            AI-powered solutions that transcend traditional boundaries.
+        </p>
+        
+        {% if not user.is_authenticated %}
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/signup/" class="btn-primary text-lg px-8 py-4">
+                <i class="fas fa-rocket mr-2"></i>
+                Start Free Trial
+            </a>
+            <a href="/about/" class="btn-secondary text-lg px-8 py-4">
+                <i class="fas fa-play-circle mr-2"></i>
+                Explore Universe
+            </a>
+        </div>
+        {% else %}
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/dashboard/" class="btn-primary text-lg px-8 py-4">
+                <i class="fas fa-tachometer-alt mr-2"></i>
+                Enter Dashboard
+            </a>
+            <a href="/ai-chat/" class="btn-secondary text-lg px-8 py-4">
+                <i class="fas fa-robot mr-2"></i>
+                Launch AI Assistant
+            </a>
+        </div>
+        {% endif %}
     </div>
 </div>
 
 <!-- Features Section -->
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <h2 class="text-3xl font-bold text-center mb-12">Why Choose Hakimu?</h2>
+<div class="py-32">
+    <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">
+        <span class="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+            Cosmic Features
+        </span>
+    </h2>
     
-    <div class="grid md:grid-cols-3 gap-8">
+    <div class="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
         <!-- Feature 1 -->
-        <div class="bg-gray-800/50 p-6 rounded-xl hover:bg-gray-800 transition">
-            <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4">
-                <i class="fas fa-robot text-blue-400 text-xl"></i>
+        <div class="space-card group">
+            <div class="text-5xl mb-6 text-blue-400 group-hover:scale-110 transition-transform">
+                <i class="fas fa-robot"></i>
             </div>
-            <h3 class="text-xl font-semibold mb-2">AI-Powered</h3>
-            <p class="text-gray-400">Advanced AI algorithms to help with legal research and document analysis.</p>
+            <h3 class="text-2xl font-bold mb-4">AI Legal Assistant</h3>
+            <p class="text-gray-400">Advanced artificial intelligence to handle your legal queries 24/7</p>
         </div>
         
         <!-- Feature 2 -->
-        <div class="bg-gray-800/50 p-6 rounded-xl hover:bg-gray-800 transition">
-            <div class="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mb-4">
-                <i class="fas fa-shield-alt text-purple-400 text-xl"></i>
+        <div class="space-card group">
+            <div class="text-5xl mb-6 text-purple-400 group-hover:scale-110 transition-transform">
+                <i class="fas fa-shield-alt"></i>
             </div>
-            <h3 class="text-xl font-semibold mb-2">Secure & Private</h3>
-            <p class="text-gray-400">Bank-level encryption to keep your sensitive legal documents safe.</p>
+            <h3 class="text-2xl font-bold mb-4">Quantum Security</h3>
+            <p class="text-gray-400">Next-generation encryption protecting your sensitive data</p>
         </div>
         
         <!-- Feature 3 -->
-        <div class="bg-gray-800/50 p-6 rounded-xl hover:bg-gray-800 transition">
-            <div class="w-12 h-12 bg-pink-500/20 rounded-lg flex items-center justify-center mb-4">
-                <i class="fas fa-globe text-pink-400 text-xl"></i>
+        <div class="space-card group">
+            <div class="text-5xl mb-6 text-pink-400 group-hover:scale-110 transition-transform">
+                <i class="fas fa-globe"></i>
             </div>
-            <h3 class="text-xl font-semibold mb-2">Pan-African</h3>
-            <p class="text-gray-400">Legal resources and expertise from across the African continent.</p>
+            <h3 class="text-2xl font-bold mb-4">Pan-African Network</h3>
+            <p class="text-gray-400">Connected legal resources across the entire continent</p>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Section -->
+<div class="py-20">
+    <div class="grid md:grid-cols-4 gap-8 max-w-7xl mx-auto">
+        <div class="text-center">
+            <div class="text-4xl font-bold text-blue-400 mb-2">500+</div>
+            <div class="text-gray-400">Law Firms</div>
+        </div>
+        <div class="text-center">
+            <div class="text-4xl font-bold text-purple-400 mb-2">10k+</div>
+            <div class="text-gray-400">Happy Clients</div>
+        </div>
+        <div class="text-center">
+            <div class="text-4xl font-bold text-pink-400 mb-2">50+</div>
+            <div class="text-gray-400">Legal Experts</div>
+        </div>
+        <div class="text-center">
+            <div class="text-4xl font-bold text-indigo-400 mb-2">99%</div>
+            <div class="text-gray-400">Success Rate</div>
         </div>
     </div>
 </div>
 
 <!-- CTA Section -->
-<div class="bg-gradient-to-r from-blue-500/10 to-purple-500/10 py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-3xl font-bold mb-4">Ready to Get Started?</h2>
-        <p class="text-gray-400 mb-8 max-w-2xl mx-auto">
-            Join thousands of legal professionals who trust Hakimu for their daily workflow.
+<div class="py-20">
+    <div class="space-card max-w-4xl mx-auto text-center p-12">
+        <h2 class="text-4xl font-bold mb-6">Ready to Launch?</h2>
+        <p class="text-xl text-gray-400 mb-8">
+            Join the legal revolution and experience the future today.
         </p>
         {% if not user.is_authenticated %}
-        <a href="/signup/" class="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-8 py-3 rounded-lg font-semibold hover:opacity-90 transition inline-block">
-            Create Free Account
+        <a href="/signup/" class="btn-primary text-lg px-8 py-4">
+            <i class="fas fa-rocket mr-2"></i>
+            Create Account
         </a>
         {% else %}
-        <a href="/dashboard/" class="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-8 py-3 rounded-lg font-semibold hover:opacity-90 transition inline-block">
+        <a href="/dashboard/" class="btn-primary text-lg px-8 py-4">
+            <i class="fas fa-tachometer-alt mr-2"></i>
             Go to Dashboard
         </a>
         {% endif %}
     </div>
 </div>
-
-<!-- Footer -->
-<footer class="bg-gray-800/50 border-t border-gray-700 py-8">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center text-gray-400">
-            <p>&copy; 2026 Hakimu. All rights reserved.</p>
-        </div>
-    </div>
-</footer>
 {% endblock %}
