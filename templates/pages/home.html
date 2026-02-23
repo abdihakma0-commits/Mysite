@@ -1,28 +1,267 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Hakimu Official - Legal Tech Solutions{% endblock %}
+{% block title %}Hakimu - Futuristic Legal Tech{% endblock %}
 
 {% block extra_css %}
 <style>
-    .hero-section {
-        text-align: center;
-        padding: 4rem 0;
-        background: linear-gradient(135deg, #667eea20, #764ba220);
-        border-radius: 30px;
-        margin-bottom: 3rem;
+    /* ========== CUSTOM STYLES FOR HAKIMU LANDING ========== */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #0a0a0f;
+        color: #ffffff;
+        overflow-x: hidden;
+        position: relative;
+    }
+    
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: #1a1a2e;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(135deg, #764ba2, #667eea);
+    }
+    
+    /* Animated Gradient Background */
+    .gradient-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -2;
+        background: radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.15) 0%, transparent 50%),
+                    radial-gradient(circle at 40% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%);
+        animation: gradientShift 20s ease infinite;
+    }
+    
+    @keyframes gradientShift {
+        0%, 100% { opacity: 0.5; transform: scale(1); }
+        50% { opacity: 0.8; transform: scale(1.1); }
+    }
+    
+    /* Floating Orbs */
+    .orb {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(80px);
+        z-index: -1;
+        animation: float 20s infinite ease-in-out;
+    }
+    
+    .orb-1 {
+        width: 400px;
+        height: 400px;
+        background: rgba(102, 126, 234, 0.3);
+        top: -100px;
+        left: -100px;
+        animation-delay: 0s;
+    }
+    
+    .orb-2 {
+        width: 500px;
+        height: 500px;
+        background: rgba(118, 75, 162, 0.3);
+        bottom: -200px;
+        right: -100px;
+        animation-delay: -5s;
+    }
+    
+    .orb-3 {
+        width: 300px;
+        height: 300px;
+        background: rgba(0, 255, 255, 0.2);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        animation-delay: -10s;
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(50px, 50px) scale(1.1); }
+        66% { transform: translate(-50px, 20px) scale(0.9); }
+    }
+    
+    /* Glassmorphism */
+    .glass {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 24px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    .glass-card {
+        background: rgba(255, 255, 255, 0.02);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.03);
+        border-radius: 32px;
+        transition: all 0.3s ease;
         position: relative;
         overflow: hidden;
     }
     
-    .hero-section::before {
+    .glass-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+        transition: left 0.7s ease;
+    }
+    
+    .glass-card:hover::before {
+        left: 100%;
+    }
+    
+    .glass-card:hover {
+        transform: translateY(-10px);
+        border-color: rgba(102, 126, 234, 0.3);
+        box-shadow: 0 30px 60px rgba(102, 126, 234, 0.2);
+    }
+    
+    /* Glowing Button */
+    .glow-button {
+        position: relative;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        padding: 1rem 2.5rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        z-index: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+    
+    .glow-button::before {
+        content: '';
+        position: absolute;
+        top: var(--y, 50%);
+        left: var(--x, 50%);
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+        z-index: -1;
+    }
+    
+    .glow-button:hover::before {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .glow-button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 30px rgba(102, 126, 234, 0.6);
+    }
+    
+    /* Hero Title */
+    .hero-title {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: clamp(3rem, 8vw, 6rem);
+        font-weight: 800;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        background: linear-gradient(135deg, #ffffff, #a5b4fc, #c084fc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 1.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+        color: rgba(255, 255, 255, 0.6);
+        max-width: 600px;
+        margin: 0 auto 2rem;
+    }
+    
+    /* Section Titles */
+    .section-title {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 700;
+        background: linear-gradient(135deg, #ffffff, #a5b4fc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 1rem;
+    }
+    
+    .section-subtitle {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 1.1rem;
+        max-width: 700px;
+        margin: 0 auto 3rem;
+    }
+    
+    /* Feature Cards */
+    .feature-icon {
+        width: 70px;
+        height: 70px;
+        background: linear-gradient(135deg, #667eea20, #764ba220);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: #667eea;
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(102, 126, 234, 0.2);
+    }
+    
+    .glass-card:hover .feature-icon {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        transform: scale(1.1) rotate(5deg);
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    }
+    
+    /* CTA Section */
+    .cta-section {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+        border-radius: 60px;
+        padding: 4rem 2rem;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .cta-section::before {
         content: '';
         position: absolute;
         top: -50%;
-        right: -50%;
+        left: -50%;
         width: 200%;
         height: 200%;
-        background: radial-gradient(circle, rgba(102,126,234,0.1) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
         animation: rotate 20s linear infinite;
     }
     
@@ -31,149 +270,601 @@
         to { transform: rotate(360deg); }
     }
     
-    .hero-section h1 {
-        font-size: 3.5rem;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 1rem;
-        position: relative;
-        animation: fadeInUp 0.8s ease-out;
-    }
-    
-    .hero-section p {
-        font-size: 1.3rem;
-        color: #666;
-        max-width: 700px;
-        margin: 0 auto 2rem;
-        position: relative;
-        animation: fadeInUp 0.8s ease-out 0.2s both;
-    }
-    
-    .hero-buttons {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        position: relative;
-        animation: fadeInUp 0.8s ease-out 0.4s both;
-    }
-    
-    .hero-buttons .btn {
-        padding: 1rem 2.5rem;
-        font-size: 1.2rem;
-    }
-    
-    .features-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-        margin-top: 3rem;
-    }
-    
-    .feature-card {
-        background: white;
-        border-radius: 20px;
-        padding: 2rem;
-        text-align: center;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-        transition: all 0.3s ease;
-        animation: fadeInUp 0.8s ease-out;
-        animation-fill-mode: both;
-    }
-    
-    .feature-card:nth-child(1) { animation-delay: 0.2s; }
-    .feature-card:nth-child(2) { animation-delay: 0.4s; }
-    .feature-card:nth-child(3) { animation-delay: 0.6s; }
-    
-    .feature-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
-    }
-    
-    .feature-icon {
-        width: 80px;
-        height: 80px;
-        background: linear-gradient(135deg, #667eea20, #764ba220);
+    /* Social Icons */
+    .social-icon {
+        width: 45px;
+        height: 45px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.05);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin: 0 auto 1.5rem;
-        font-size: 2.5rem;
-        color: #667eea;
+        color: rgba(255, 255, 255, 0.7);
         transition: all 0.3s ease;
+        text-decoration: none;
     }
     
-    .feature-card:hover .feature-icon {
+    .social-icon:hover {
         background: linear-gradient(135deg, #667eea, #764ba2);
         color: white;
-        transform: rotate(360deg);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
     }
     
-    .feature-card h3 {
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
-        color: #333;
+    /* Hide elements initially for GSAP */
+    .gsap-hide {
+        opacity: 0;
+        visibility: hidden;
     }
     
-    .feature-card p {
-        color: #666;
-        line-height: 1.6;
-    }
-    
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    /* Particle Canvas */
+    #particle-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="hero-section">
-    <h1 class="animate__animated animate__fadeInDown">Hakimu Official ⚖️</h1>
-    <p class="animate__animated animate__fadeInUp">Modern legal technology solutions for the digital age. Access justice anytime, anywhere.</p>
-    
-    <div class="hero-buttons">
-        {% if not user.is_authenticated %}
-        <a href="/signup/" class="btn btn-primary animate__animated animate__pulse animate__infinite">
-            <i class="fas fa-user-plus"></i> Get Started
-        </a>
-        <a href="/login/" class="btn btn-secondary animate__animated animate__fadeIn">
-            <i class="fas fa-sign-in-alt"></i> Login
-        </a>
-        {% endif %}
-    </div>
-</div>
+<!-- Particle Canvas for effects -->
+<canvas id="particle-canvas"></canvas>
 
-<div class="features-grid">
-    <div class="feature-card">
-        <div class="feature-icon">
-            <i class="fas fa-bolt"></i>
+<!-- Animated Background -->
+<div class="gradient-bg"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- Hero Section -->
+<section class="min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto text-center">
+        <div class="hero-content">
+            <span class="inline-block px-4 py-2 glass rounded-full text-sm mb-8 text-blue-300 border border-blue-500/20 animate__animated animate__fadeInUp">
+                ⚡ Welcome to the Future of Legal Tech
+            </span>
+            
+            <h1 class="hero-title animate__animated animate__fadeInUp animate__delay-1s">
+                Welcome to <br>Hakimu
+            </h1>
+            
+            <p class="hero-subtitle animate__animated animate__fadeInUp animate__delay-2s">
+                Experience the perfect blend of law and technology. 
+                Our AI-powered platform revolutionizes legal research 
+                and document management.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mt-10 animate__animated animate__fadeInUp animate__delay-3s">
+                <a href="{% url 'signup' %}" class="glow-button">
+                    <i class="fas fa-rocket"></i>
+                    Start Free Trial
+                </a>
+                <a href="#about" class="px-8 py-4 rounded-full border border-white/20 text-white font-semibold hover:bg-white/10 transition-all duration-300 flex items-center justify-center gap-2">
+                    <i class="fas fa-play-circle"></i>
+                    Learn More
+                </a>
+            </div>
         </div>
-        <h3>Lightning Fast ⚡</h3>
-        <p>Optimized performance with Django's powerful backend for instant access to legal resources.</p>
     </div>
-    
-    <div class="feature-card">
-        <div class="feature-icon">
-            <i class="fas fa-shield-alt"></i>
+</section>
+
+<!-- About Section -->
+<section id="about" class="py-32 px-4">
+    <div class="max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-16 items-center">
+            <div class="about-left">
+                <span class="text-blue-400 font-semibold text-sm tracking-wider">ABOUT US</span>
+                <h2 class="section-title mt-4">Redefining Legal<br>Technology</h2>
+                <p class="text-gray-400 text-lg leading-relaxed mb-8">
+                    Hakimu is on a mission to democratize access to legal services 
+                    through cutting-edge technology. We combine artificial intelligence 
+                    with legal expertise to create solutions that empower both lawyers 
+                    and clients across Africa.
+                </p>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
+                            <i class="fas fa-check text-white"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg">AI-Powered Research</h4>
+                            <p class="text-gray-500">Instant access to millions of legal documents</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
+                            <i class="fas fa-shield-alt text-white"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg">Enterprise Security</h4>
+                            <p class="text-gray-500">Bank-level encryption for sensitive data</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
+                            <i class="fas fa-globe text-white"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg">Pan-African Coverage</h4>
+                            <p class="text-gray-500">Legal resources from 10+ African countries</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="about-right">
+                <div class="glass-card p-8">
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-blue-400 mb-2">500+</div>
+                            <p class="text-gray-400">Law Firms</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-purple-400 mb-2">10k+</div>
+                            <p class="text-gray-400">Clients</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-cyan-400 mb-2">50+</div>
+                            <p class="text-gray-400">Legal Experts</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-pink-400 mb-2">99%</div>
+                            <p class="text-gray-400">Success Rate</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <h3>Secure & Private 🔒</h3>
-        <p>Enterprise-grade security with Django's built-in protections for your sensitive legal data.</p>
     </div>
-    
-    <div class="feature-card">
-        <div class="feature-icon">
-            <i class="fas fa-mobile-alt"></i>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="py-32 px-4">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <span class="text-blue-400 font-semibold text-sm tracking-wider">FEATURES</span>
+            <h2 class="section-title">Everything You Need</h2>
+            <p class="section-subtitle">Powerful tools designed to streamline your legal workflow</p>
         </div>
-        <h3>Mobile Ready 📱</h3>
-        <p>Beautiful responsive design that works seamlessly on all devices, from desktop to mobile.</p>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Feature 1 -->
+            <div class="glass-card p-8 feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3">AI Legal Assistant</h3>
+                <p class="text-gray-400 leading-relaxed">
+                    Intelligent chatbot that answers legal questions and helps with document preparation 24/7.
+                </p>
+            </div>
+            
+            <!-- Feature 2 -->
+            <div class="glass-card p-8 feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3">Smart Documents</h3>
+                <p class="text-gray-400 leading-relaxed">
+                    AI-powered document analysis, contract review, and automated drafting in seconds.
+                </p>
+            </div>
+            
+            <!-- Feature 3 -->
+            <div class="glass-card p-8 feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3">Legal Research</h3>
+                <p class="text-gray-400 leading-relaxed">
+                    Advanced search across millions of case laws, statutes, and legal precedents.
+                </p>
+            </div>
+            
+            <!-- Feature 4 -->
+            <div class="glass-card p-8 feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3">Time Tracking</h3>
+                <p class="text-gray-400 leading-relaxed">
+                    Automated time tracking and billing for legal professionals with detailed reports.
+                </p>
+            </div>
+            
+            <!-- Feature 5 -->
+            <div class="glass-card p-8 feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3">Secure Storage</h3>
+                <p class="text-gray-400 leading-relaxed">
+                    End-to-end encrypted document storage with granular access controls.
+                </p>
+            </div>
+            
+            <!-- Feature 6 -->
+            <div class="glass-card p-8 feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3">Client Portal</h3>
+                <p class="text-gray-400 leading-relaxed">
+                    Secure client communication and document sharing with real-time updates.
+                </p>
+            </div>
+        </div>
     </div>
-</div>
+</section>
+
+<!-- Services Section -->
+<section id="services" class="py-32 px-4">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <span class="text-blue-400 font-semibold text-sm tracking-wider">SERVICES</span>
+            <h2 class="section-title">What We Offer</h2>
+            <p class="section-subtitle">Comprehensive legal technology solutions for modern firms</p>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Service 1 -->
+            <div class="glass-card p-8 text-center service-card">
+                <div class="feature-icon mx-auto">
+                    <i class="fas fa-scale-balanced"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3">Case Management</h3>
+                <p class="text-gray-400 mb-6">
+                    End-to-end case management system with automated workflows and deadline tracking.
+                </p>
+                <a href="#" class="text-blue-400 font-semibold flex items-center justify-center gap-2 hover:gap-3 transition-all">
+                    Learn More <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            
+            <!-- Service 2 -->
+            <div class="glass-card p-8 text-center service-card">
+                <div class="feature-icon mx-auto">
+                    <i class="fas fa-file-signature"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3">E-Signatures</h3>
+                <p class="text-gray-400 mb-6">
+                    Legally binding electronic signatures with comprehensive audit trails and compliance.
+                </p>
+                <a href="#" class="text-blue-400 font-semibold flex items-center justify-center gap-2 hover:gap-3 transition-all">
+                    Learn More <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            
+            <!-- Service 3 -->
+            <div class="glass-card p-8 text-center service-card">
+                <div class="feature-icon mx-auto">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3">Analytics</h3>
+                <p class="text-gray-400 mb-6">
+                    Detailed analytics and insights for your legal practice with predictive modeling.
+                </p>
+                <a href="#" class="text-blue-400 font-semibold flex items-center justify-center gap-2 hover:gap-3 transition-all">
+                    Learn More <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-32 px-4">
+    <div class="max-w-7xl mx-auto">
+        <div class="cta-section text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to Transform<br>Your Legal Practice?</h2>
+            <p class="text-xl text-gray-300 mb-10 max-w-3xl mx-auto">
+                Join thousands of legal professionals who trust Hakimu for their daily workflow and client management.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="{% url 'signup' %}" class="glow-button text-lg px-12 py-5">
+                    <i class="fas fa-rocket"></i>
+                    Get Started Now
+                </a>
+                <a href="{% url 'contact' %}" class="px-8 py-4 rounded-full border border-white/20 text-white font-semibold hover:bg-white/10 transition-all duration-300 flex items-center justify-center gap-2">
+                    <i class="fas fa-headset"></i>
+                    Contact Sales
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-16 px-4 border-t border-white/10">
+    <div class="max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-4 gap-12 mb-12">
+            <div>
+                <div class="flex items-center gap-2 mb-6">
+                    <i class="fas fa-gavel text-2xl text-blue-400"></i>
+                    <span class="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Hakimu</span>
+                </div>
+                <p class="text-gray-400 mb-6">
+                    Revolutionizing legal technology with AI-powered solutions across Africa.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="font-semibold mb-4">Product</h4>
+                <ul class="space-y-3 text-gray-400">
+                    <li><a href="#" class="hover:text-white transition">Features</a></li>
+                    <li><a href="#" class="hover:text-white transition">Pricing</a></li>
+                    <li><a href="#" class="hover:text-white transition">API</a></li>
+                    <li><a href="#" class="hover:text-white transition">Documentation</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="font-semibold mb-4">Company</h4>
+                <ul class="space-y-3 text-gray-400">
+                    <li><a href="#" class="hover:text-white transition">About</a></li>
+                    <li><a href="#" class="hover:text-white transition">Blog</a></li>
+                    <li><a href="#" class="hover:text-white transition">Careers</a></li>
+                    <li><a href="#" class="hover:text-white transition">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="font-semibold mb-4">Legal</h4>
+                <ul class="space-y-3 text-gray-400">
+                    <li><a href="#" class="hover:text-white transition">Privacy</a></li>
+                    <li><a href="#" class="hover:text-white transition">Terms</a></li>
+                    <li><a href="#" class="hover:text-white transition">Security</a></li>
+                    <li><a href="#" class="hover:text-white transition">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="text-center text-gray-500 text-sm border-t border-white/10 pt-8">
+            © 2024 Hakimu. All rights reserved. Built with ❤️ in Nairobi.
+        </div>
+    </div>
+</footer>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+
+<script>
+    // Wait for DOM to load
+    document.addEventListener('DOMContentLoaded', () => {
+        // Register GSAP plugins
+        gsap.registerPlugin(ScrollTrigger, TextPlugin);
+        
+        // ========== PARTICLE EFFECT ==========
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        let particles = [];
+        
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+                this.color = `rgba(102, 126, 234, ${Math.random() * 0.3})`;
+            }
+            
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        
+        function initParticles() {
+            for (let i = 0; i < 100; i++) {
+                particles.push(new Particle());
+            }
+        }
+        
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let particle of particles) {
+                particle.update();
+                particle.draw();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+        
+        initParticles();
+        animateParticles();
+        
+        // Handle resize
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+        
+        // ========== GSAP ANIMATIONS ==========
+        
+        // Initial states
+        gsap.set('.hero-content > *', {
+            opacity: 0,
+            y: 50
+        });
+        
+        // Hero section stagger animation
+        const heroTimeline = gsap.timeline();
+        
+        heroTimeline.to('.hero-content > *', {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            stagger: 0.2,
+            ease: 'power3.out'
+        });
+        
+        // About section animations
+        gsap.from('.about-left', {
+            scrollTrigger: {
+                trigger: '#about',
+                start: 'top 80%',
+                end: 'bottom 20%',
+                toggleActions: 'play none none reverse'
+            },
+            opacity: 0,
+            x: -50,
+            duration: 1,
+            ease: 'power3.out'
+        });
+        
+        gsap.from('.about-right', {
+            scrollTrigger: {
+                trigger: '#about',
+                start: 'top 80%',
+                end: 'bottom 20%',
+                toggleActions: 'play none none reverse'
+            },
+            opacity: 0,
+            x: 50,
+            duration: 1,
+            delay: 0.3,
+            ease: 'power3.out'
+        });
+        
+        // Features stagger animation
+        gsap.from('.feature-card', {
+            scrollTrigger: {
+                trigger: '#features',
+                start: 'top 70%',
+                end: 'bottom 20%',
+                toggleActions: 'play none none reverse'
+            },
+            opacity: 0,
+            y: 50,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: 'back.out(1.2)'
+        });
+        
+        // Services stagger animation
+        gsap.from('.service-card', {
+            scrollTrigger: {
+                trigger: '#services',
+                start: 'top 70%',
+                end: 'bottom 20%',
+                toggleActions: 'play none none reverse'
+            },
+            opacity: 0,
+            y: 50,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: 'power3.out'
+        });
+        
+        // CTA section animation
+        gsap.from('.cta-section', {
+            scrollTrigger: {
+                trigger: '.cta-section',
+                start: 'top 80%',
+                end: 'bottom 20%',
+                toggleActions: 'play none none reverse'
+            },
+            opacity: 0,
+            scale: 0.9,
+            duration: 1,
+            ease: 'power3.out'
+        });
+        
+        // Parallax effect on orbs
+        gsap.to('.orb-1', {
+            scrollTrigger: {
+                trigger: 'body',
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: 1
+            },
+            y: 200,
+            x: 100,
+            ease: 'none'
+        });
+        
+        gsap.to('.orb-2', {
+            scrollTrigger: {
+                trigger: 'body',
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: 1
+            },
+            y: -200,
+            x: -100,
+            ease: 'none'
+        });
+        
+        gsap.to('.orb-3', {
+            scrollTrigger: {
+                trigger: 'body',
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: 1
+            },
+            y: 100,
+            x: -50,
+            ease: 'none'
+        });
+        
+        // Mouse move effect for glow buttons
+        document.querySelectorAll('.glow-button').forEach(button => {
+            button.addEventListener('mousemove', (e) => {
+                const rect = button.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                button.style.setProperty('--x', `${x}px`);
+                button.style.setProperty('--y', `${y}px`);
+            });
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    });
+</script>
 {% endblock %}
