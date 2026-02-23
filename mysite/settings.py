@@ -1,6 +1,6 @@
 """
 Django settings for mysite project.
-Hakimu Official - Complete Configuration
+Hakimu Official - Complete Configuration with Django Extensions
 """
 
 from pathlib import Path
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     # Third-party apps
+    'django_extensions',  # For show_urls and other useful commands
     'crispy_forms',
     'crispy_bootstrap5',
     'widget_tweaks',
