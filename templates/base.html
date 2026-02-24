@@ -194,6 +194,28 @@
             animation: robotWave 2s infinite;
         }
         
+        /* Portfolio Button - New */
+        .btn-portfolio {
+            background: linear-gradient(135deg, #A855F7, #C084FC);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+            animation: glow 2s infinite;
+        }
+        
+        .btn-portfolio:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.6);
+        }
+        
         /* Login Button */
         .btn-login {
             background: transparent;
@@ -299,6 +321,11 @@
         @keyframes shimmer {
             0% { transform: translateX(-100%) rotate(45deg); }
             100% { transform: translateX(100%) rotate(45deg); }
+        }
+        
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(168, 85, 247, 0.6); }
         }
         
         /* Navbar */
@@ -408,6 +435,15 @@
             to { transform: rotate(360deg); }
         }
         
+        .user-name {
+            color: white;
+            font-weight: 500;
+            max-width: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
         /* Mobile Menu */
         .mobile-menu-btn {
             display: none;
@@ -509,7 +545,41 @@
             border-color: #4299e1;
         }
         
+        /* Glass Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            border-color: rgba(102, 126, 234, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(102, 126, 234, 0.3);
+        }
+        
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea, #9f7aea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
         /* Responsive */
+        @media (max-width: 1024px) {
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .btn-primary, .btn-secondary, .btn-dashboard, .btn-ai, .btn-portfolio {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -527,9 +597,8 @@
                 display: none;
             }
             
-            .btn-primary, .btn-secondary, .btn-dashboard, .btn-ai {
-                padding: 0.5rem 1rem;
-                font-size: 0.9rem;
+            .user-name {
+                display: none;
             }
         }
     </style>
@@ -549,6 +618,9 @@
                 <a href="/" class="nav-btn">Home</a>
                 <a href="/about/" class="nav-btn">About</a>
                 <a href="/contact/" class="nav-btn">Contact</a>
+                <a href="/portfolio/" class="btn-portfolio">
+                    <i class="fas fa-briefcase"></i> Portfolio
+                </a>
                 
                 {% if user.is_authenticated %}
                     <a href="/dashboard/" class="btn-dashboard">
@@ -591,6 +663,9 @@
             <a href="/" class="nav-btn text-lg" onclick="toggleMobileMenu()">Home</a>
             <a href="/about/" class="nav-btn text-lg" onclick="toggleMobileMenu()">About</a>
             <a href="/contact/" class="nav-btn text-lg" onclick="toggleMobileMenu()">Contact</a>
+            <a href="/portfolio/" class="btn-portfolio text-center" onclick="toggleMobileMenu()">
+                <i class="fas fa-briefcase"></i> Portfolio
+            </a>
             
             {% if user.is_authenticated %}
                 <a href="/dashboard/" class="btn-dashboard text-center" onclick="toggleMobileMenu()">
@@ -686,8 +761,8 @@
             }
         });
 
-        // Add hover sound effect (optional)
-        const buttons = document.querySelectorAll('.btn-primary, .btn-secondary, .btn-dashboard, .btn-ai, .btn-login, .btn-signup');
+        // Add hover effects
+        const buttons = document.querySelectorAll('.btn-primary, .btn-secondary, .btn-dashboard, .btn-ai, .btn-portfolio, .btn-login, .btn-signup');
         buttons.forEach(button => {
             button.addEventListener('mouseenter', () => {
                 button.style.transform = 'scale(1.05)';
