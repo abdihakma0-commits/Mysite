@@ -1,0 +1,37 @@
+{% load static %}
+<section class="hero-section">
+    <!-- Background 3D Canvas -->
+    <div id="hero-canvas" class="hero-canvas"></div>
+
+    <div class="container">
+        <div class="hero-grid">
+            <!-- Left - 3D Canvas Placeholder -->
+            <div class="hero-left">
+                <div id="hero-3d-placeholder" class="hero-3d-placeholder">
+                    <!-- Three.js will render here -->
+                </div>
+            </div>
+
+            <!-- Right - Text Animation -->
+            <div class="hero-right">
+                <h1 class="hero-title">HAKIMU</h1>
+                
+                <div class="text-switch-container">
+                    <div id="text-switch" class="text-switch">
+                        <div class="text-item designer">DESIGNER</div>
+                        <div class="text-item developer">DEVELOPER</div>
+                    </div>
+                </div>
+
+                <p class="hero-description">
+                    Creating immersive digital experiences at the intersection of design and technology
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+        <div class="scroll-dot"></div>
+    </div>
+</section>

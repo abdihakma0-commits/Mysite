@@ -1,0 +1,42 @@
+{% extends "portfolio/base_portfolio.html" %}
+{% load static %}
+
+{% block content %}
+<!-- Loading Screen -->
+<div id="loading-screen" class="loading-screen">
+    <div class="loading-container">
+        <div class="pill-loader">
+            <div class="pill-progress" id="progress-bar"></div>
+            <span class="pill-percentage" id="percentage">0%</span>
+        </div>
+    </div>
+</div>
+
+<!-- Welcome Button (hidden initially) -->
+<div id="welcome-button" class="welcome-button hidden">
+    <button class="welcome-btn">
+        <span class="gradient-text">WELCOME</span>
+    </button>
+</div>
+
+<!-- Main Content (hidden initially) -->
+<div id="main-content" class="main-content hidden">
+    <!-- Hero Section -->
+    {% include "portfolio/components/hero.html" %}
+    
+    <!-- About Section -->
+    {% include "portfolio/components/about.html" %}
+    
+    <!-- What I Do Section -->
+    {% include "portfolio/components/what-i-do.html" %}
+    
+    <!-- Career Timeline -->
+    {% include "portfolio/components/timeline.html" %}
+    
+    <!-- Projects Grid -->
+    {% include "portfolio/components/projects.html" %}
+    
+    <!-- Tech Stack 3D -->
+    {% include "portfolio/components/tech-stack.html" %}
+</div>
+{% endblock %}

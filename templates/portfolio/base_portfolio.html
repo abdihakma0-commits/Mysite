@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Hakimu | Creative Developer & Designer{% endblock %}</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Portfolio CSS -->
+    <link rel="stylesheet" href="{% static 'portfolio/css/portfolio.css' %}">
+</head>
+<body class="portfolio-body">
+    <!-- Glow Cursor Elements (created by JS) -->
+    <div id="cursor-glow"></div>
+    <div id="cursor-dot"></div>
+
+    <!-- Main Content -->
+    <main class="portfolio-main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Portfolio JavaScript -->
+    <script src="{% static 'portfolio/js/portfolio.js' %}"></script>
+    <script src="{% static 'portfolio/three/scenes.js' %}"></script>
+</body>
+</html>

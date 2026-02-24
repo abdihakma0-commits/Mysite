@@ -1,6 +1,6 @@
 """
 Main URL Configuration for Hakimu Official
-Includes all apps: core, blog, and hakimu_ai_chat
+Includes all apps: core, blog, hakimu_ai_chat, and portfolio
 """
 from django.contrib import admin
 from django.urls import path, include
@@ -27,6 +27,9 @@ urlpatterns = [
     path('faq/', views.faq_view, name='faq'),
     path('features/', views.features_view, name='features'),
     path('pricing/', views.pricing_view, name='pricing'),
+    
+    # ==================== PORTFOLIO ====================
+    path('portfolio/', views.portfolio_view, name='portfolio'),
     
     # ==================== AUTHENTICATION ====================
     path('login/', views.login_view, name='login'),
