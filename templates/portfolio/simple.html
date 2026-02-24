@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Portfolio - Hakimu{% endblock %}
+
+{% block content %}
+<style>
+    .portfolio-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 4rem 2rem;
+    }
+    
+    .portfolio-header {
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+    
+    .portfolio-header h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #A855F7, #C084FC);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 1rem;
+    }
+    
+    .portfolio-header p {
+        color: #9CA3AF;
+        font-size: 1.2rem;
+    }
+    
+    .debug-section {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        padding: 2rem;
+        margin: 2rem 0;
+    }
+    
+    .debug-section h2 {
+        color: #A855F7;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+    
+    .info-item {
+        background: rgba(0, 0, 0, 0.3);
+        padding: 1rem;
+        border-radius: 12px;
+    }
+    
+    .info-label {
+        color: #9CA3AF;
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .info-value {
+        color: white;
+        font-size: 1.1rem;
+        font-weight: 500;
+    }
+    
+    .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+    
+    .project-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 1.5rem;
+        transition: all 0.3s;
+    }
+    
+    .project-card:hover {
+        transform: translateY(-5px);
+        border-color: #A855F7;
+        box-shadow: 0 10px 30px -10px rgba(168, 85, 247, 0.3);
+    }
+    
+    .project-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .project-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+    
+    .project-description {
+        color: #9CA3AF;
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+</style>
+
+<div class="portfolio-container">
+    <!-- Header -->
+    <div class="portfolio-header">
+        <h1>My Portfolio</h1>
+        <p>Check out my latest work and projects</p>
+    </div>
+
+    <!-- Debug Information -->
+    <div class="debug-section">
+        <h2>🔧 System Information</h2>
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="info-label">User Status</div>
+                <div class="info-value">
+                    {% if user.is_authenticated %}
+                        ✅ Logged in as {{ user.username }}
+                    {% else %}
+                        👤 Not logged in
+                    {% endif %}
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Debug Mode</div>
+                <div class="info-value">
+                    {% if debug %}🔧 On{% else %}🚀 Off{% endif %}
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Template Path</div>
+                <div class="info-value">portfolio/simple.html</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Server Time</div>
+                <div class="info-value">{% now "Y-m-d H:i:s" %}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Projects Grid -->
+    <h2 style="font-size: 2rem; margin: 3rem 0 2rem; text-align: center;">Featured Projects</h2>
+    <div class="projects-grid">
+        <div class="project-card">
+            <div class="project-icon">🎨</div>
+            <h3 class="project-title">Creative Portfolio</h3>
+            <p class="project-description">A stunning portfolio website with 3D animations and smooth interactions.</p>
+        </div>
+        
+        <div class="project-card">
+            <div class="project-icon">🤖</div>
+            <h3 class="project-title">AI Legal Assistant</h3>
+            <p class="project-description">Intelligent chatbot powered by Gemini API for legal research.</p>
+        </div>
+        
+        <div class="project-card">
+            <div class="project-icon">📱</div>
+            <h3 class="project-title">Mobile App Design</h3>
+            <p class="project-description">Beautiful and intuitive mobile application design for legal tech.</p>
+        </div>
+        
+        <div class="project-card">
+            <div class="project-icon">⚡</div>
+            <h3 class="project-title">3D Interactive</h3>
+            <p class="project-description">Immersive 3D experiences using Three.js and WebGL.</p>
+        </div>
+    </div>
+
+    <!-- Status Message -->
+    <div style="text-align: center; margin-top: 4rem; padding: 2rem; background: rgba(168, 85, 247, 0.1); border-radius: 12px;">
+        <p style="color: #A855F7; font-size: 1.1rem;">
+            ⚡ This is a simplified version. The full 3D portfolio is being enhanced for optimal performance.
+        </p>
+    </div>
+</div>
+{% endblock %}

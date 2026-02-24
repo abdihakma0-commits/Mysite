@@ -1,6 +1,6 @@
 """
 Django settings for mysite project.
-Hakimu Official - Complete Configuration with Django Extensions
+Hakimu Official - Complete Configuration with Logging
 """
 
 from pathlib import Path
@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     # Third-party apps
-    'django_extensions',  # For show_urls and other useful commands
+    'django_extensions',
     'crispy_forms',
     'crispy_bootstrap5',
     'widget_tweaks',
@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     # Local apps
     'core',
     'blog',
-    'hakimu_ai_chat',  # AI Chat app
+    'hakimu_ai_chat',
 ]
 
 MIDDLEWARE = [
@@ -226,3 +226,51 @@ if not DEBUG:
         'https://*.onrender.com',
         'https://hakimu.onrender.com',
     ]
+
+# =========================
+# LOGGING CONFIGURATION - ADD THIS AT THE BOTTOM
+# =========================
+import logging
+import os
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'debug.log'),
+            'formatter': 'verbose',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'propagate': False,
+        },
+        'django.request': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    },
+}

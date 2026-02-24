@@ -30,6 +30,7 @@ urlpatterns = [
     
     # ==================== PORTFOLIO ====================
     path('portfolio/', views.portfolio_view, name='portfolio'),
+    path('portfolio-debug/', views.portfolio_debug_view, name='portfolio_debug'),
     
     # ==================== AUTHENTICATION ====================
     path('login/', views.login_view, name='login'),

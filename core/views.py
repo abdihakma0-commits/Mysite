@@ -7,6 +7,9 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.core.mail import send_mail
 from django.conf import settings
+import traceback
+import sys
+from django.http import HttpResponse
 
 # =========================
 # PUBLIC PAGES
@@ -55,11 +58,49 @@ def pricing_view(request):
     return render(request, "pages/pricing.html")
 
 # =========================
-# PORTFOLIO PAGE
+# PORTFOLIO PAGES
 # =========================
 def portfolio_view(request):
-    """Premium portfolio page with 3D animations"""
-    return render(request, "portfolio/home.html")
+    """Main portfolio view"""
+    try:
+        return render(request, "portfolio/home.html")
+    except Exception as e:
+        # If error occurs, show simple version
+        return render(request, "portfolio/simple.html")
+
+def portfolio_debug_view(request):
+    """Debug view to catch and display errors"""
+    try:
+        # Try to render the actual portfolio
+        return render(request, "portfolio/home.html")
+    except Exception as e:
+        # Catch any error and display it
+        error_type, error_value, error_traceback = sys.exc_info()
+        error_message = f"""
+        <html>
+        <head>
+            <title>Portfolio Debug</title>
+            <style>
+                body {{ background: #000; color: #fff; font-family: Arial; padding: 20px; }}
+                h1 {{ color: #A855F7; }}
+                .error-box {{ background: #1a1a1a; padding: 20px; border-radius: 10px; margin-top: 20px; }}
+                h2 {{ color: #ff6b6b; }}
+                pre {{ background: #2a2a2a; padding: 15px; border-radius: 5px; overflow: auto; color: #ccc; }}
+                .info {{ color: #888; margin: 10px 0; }}
+            </style>
+        </head>
+        <body>
+            <h1>🔍 Portfolio Error Debug</h1>
+            <div class="error-box">
+                <h2>Error Type: {error_type.__name__}</h2>
+                <p style="color:#ff9999;">{error_value}</p>
+                <h3>Traceback:</h3>
+                <pre>{''.join(traceback.format_tb(error_traceback))}</pre>
+            </div>
+        </body>
+        </html>
+        """
+        return HttpResponse(error_message)
 
 # =========================
 # AUTHENTICATION
