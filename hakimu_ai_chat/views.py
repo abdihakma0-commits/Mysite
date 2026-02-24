@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 import json
-import requests  # This was missing
+import requests
 import time
 
 # Store temporary chat history in memory
@@ -46,6 +46,7 @@ def chat_api(request):
         if not api_key:
             return JsonResponse({'error': 'Gemini API key not configured'}, status=500)
         
+        # Make API request
         response = requests.post(
             f'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key={api_key}',
             json={
@@ -78,7 +79,7 @@ def chat_api(request):
             'timestamp': time.time()
         })
         
-        # Keep only last 50 messages per session
+        # Keep only last 50 messages
         if len(chat_sessions[session_id]) > 50:
             chat_sessions[session_id] = chat_sessions[session_id][-50:]
         

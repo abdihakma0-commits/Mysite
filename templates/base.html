@@ -15,8 +15,8 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Three.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     
     <style>
         * {
@@ -31,38 +31,274 @@
             color: white;
             overflow-x: hidden;
             position: relative;
+            min-height: 100vh;
         }
         
-        /* 3D Canvas Container */
-        #canvas-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
+        /* ========== STYLISH ANIMATED BUTTONS ========== */
         
-        /* Glassmorphism Effects */
-        .glass {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 24px;
-        }
-        
-        .glass-card {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            border-radius: 24px;
+        /* Primary Button - Gradient with Glow */
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
             transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            animation: float 3s ease-in-out infinite;
         }
         
-        .glass-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(66, 153, 225, 0.3);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+            z-index: 0;
+        }
+        
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+        }
+        
+        .btn-primary i {
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s;
+        }
+        
+        .btn-primary:hover i {
+            transform: translateX(5px) rotate(10deg);
+        }
+        
+        /* Secondary Button - Glass with Border */
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-secondary::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(102, 126, 234, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Dashboard Button */
+        .btn-dashboard {
+            background: linear-gradient(135deg, #4299e1, #667eea);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            animation: pulse 2s infinite;
+        }
+        
+        .btn-dashboard:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(66, 153, 225, 0.5);
+        }
+        
+        /* AI Chat Button - Special */
+        .btn-ai {
+            background: linear-gradient(135deg, #9f7aea, #f687b3);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-ai::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #9f7aea, #f687b3, #9f7aea);
+            border-radius: 50px;
+            z-index: -1;
+            animation: glowing 3s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .btn-ai:hover::before {
+            opacity: 1;
+        }
+        
+        .btn-ai:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(159, 122, 234, 0.5);
+        }
+        
+        .btn-ai i {
+            animation: robotWave 2s infinite;
+        }
+        
+        /* Login Button */
+        .btn-login {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            animation: borderPulse 2s infinite;
+        }
+        
+        .btn-login:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* Signup Button */
+        .btn-signup {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-signup:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+        }
+        
+        /* Navbar Buttons */
+        .nav-btn {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .nav-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 80%;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: transform 0.3s;
+        }
+        
+        .nav-btn:hover {
+            color: white;
+        }
+        
+        .nav-btn:hover::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes glowing {
+            0%, 100% { filter: blur(5px); }
+            50% { filter: blur(10px); }
+        }
+        
+        @keyframes robotWave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(15deg); }
+            75% { transform: rotate(-15deg); }
+        }
+        
+        @keyframes borderPulse {
+            0%, 100% { border-color: #667eea; }
+            50% { border-color: #9f7aea; }
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
         }
         
         /* Navbar */
@@ -102,80 +338,31 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            animation: logoGlow 2s infinite;
+        }
+        
+        @keyframes logoGlow {
+            0%, 100% { text-shadow: 0 0 10px rgba(66, 153, 225, 0.3); }
+            50% { text-shadow: 0 0 20px rgba(159, 122, 234, 0.5); }
         }
         
         .logo i {
             font-size: 1.8rem;
             color: #4299e1;
             -webkit-text-fill-color: initial;
+            animation: gavelSwing 3s infinite;
+        }
+        
+        @keyframes gavelSwing {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(10deg); }
+            75% { transform: rotate(-10deg); }
         }
         
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 2rem;
-        }
-        
-        .nav-link {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
-            position: relative;
-            font-size: 1rem;
-        }
-        
-        .nav-link:hover {
-            color: white;
-        }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #4299e1, #9f7aea);
-            transition: width 0.3s;
-        }
-        
-        .nav-link:hover::after {
-            width: 100%;
-        }
-        
-        /* Buttons */
-        .btn-primary {
-            background: linear-gradient(135deg, #4299e1, #9f7aea);
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            display: inline-block;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 30px rgba(66, 153, 225, 0.5);
-        }
-        
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.15);
+            gap: 1.5rem;
         }
         
         /* User Menu */
@@ -189,27 +376,36 @@
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s;
+            animation: menuPulse 2s infinite;
+        }
+        
+        @keyframes menuPulse {
+            0%, 100% { border-color: rgba(255, 255, 255, 0.1); }
+            50% { border-color: rgba(102, 126, 234, 0.5); }
         }
         
         .user-menu:hover {
-            border-color: #4299e1;
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
         }
         
         .user-avatar {
             width: 32px;
             height: 32px;
-            background: linear-gradient(135deg, #4299e1, #9f7aea);
+            background: linear-gradient(135deg, #667eea, #9f7aea);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
             font-size: 0.9rem;
+            animation: avatarSpin 10s linear infinite;
         }
         
-        .user-name {
-            color: white;
-            font-weight: 500;
+        @keyframes avatarSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
         
         /* Mobile Menu */
@@ -218,6 +414,12 @@
             font-size: 1.5rem;
             color: white;
             cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .mobile-menu-btn:hover {
+            transform: scale(1.1);
+            color: #667eea;
         }
         
         #mobileMenu {
@@ -233,31 +435,39 @@
             border-radius: 20px;
             padding: 1.5rem;
             z-index: 999;
+            animation: fadeIn 0.3s;
         }
         
         #mobileMenu.active {
             display: block;
         }
         
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        
         /* Welcome Message */
         .welcome-message {
-            background: linear-gradient(135deg, rgba(66, 153, 225, 0.1), rgba(159, 122, 234, 0.1));
-            border-left: 4px solid #4299e1;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(159, 122, 234, 0.1));
+            border-left: 4px solid #667eea;
             border-radius: 12px;
             padding: 1.5rem;
             margin-bottom: 2rem;
-            animation: glowPulse 2s infinite;
+            animation: welcomeGlow 2s infinite;
         }
         
-        @keyframes glowPulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(66, 153, 225, 0.2); }
-            50% { box-shadow: 0 0 40px rgba(66, 153, 225, 0.4); }
+        @keyframes welcomeGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(102, 126, 234, 0.2); }
+            50% { box-shadow: 0 0 40px rgba(159, 122, 234, 0.3); }
         }
         
         /* Main Content */
         .main-content {
             padding-top: 100px;
             min-height: 100vh;
+            position: relative;
+            z-index: 10;
         }
         
         /* Messages */
@@ -273,6 +483,18 @@
             padding: 1rem;
             border-radius: 8px;
             margin-bottom: 0.5rem;
+            animation: slideInRight 0.3s;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
         
         .alert-success {
@@ -304,29 +526,16 @@
             .logo span {
                 display: none;
             }
-        }
-        
-        /* Animations */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
+            
+            .btn-primary, .btn-secondary, .btn-dashboard, .btn-ai {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.6s ease-out;
         }
     </style>
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <!-- 3D Canvas Container -->
-    <div id="canvas-container"></div>
-
     <!-- Navbar -->
     <nav class="navbar">
         <div class="flex items-center justify-between w-full">
@@ -337,16 +546,18 @@
 
             <!-- Desktop Navigation -->
             <div class="nav-links">
-                <a href="/" class="nav-link">Home</a>
-                <a href="/about/" class="nav-link">About</a>
-                <a href="/contact/" class="nav-link">Contact</a>
+                <a href="/" class="nav-btn">Home</a>
+                <a href="/about/" class="nav-btn">About</a>
+                <a href="/contact/" class="nav-btn">Contact</a>
                 
                 {% if user.is_authenticated %}
-                    <a href="/dashboard/" class="nav-link">Dashboard</a>
-                    <a href="/ai-chat/" class="nav-link">
-                        <i class="fas fa-robot mr-1"></i>AI Chat
+                    <a href="/dashboard/" class="btn-dashboard">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
                     </a>
-                    <a href="/blog/" class="nav-link">Blog</a>
+                    <a href="/ai-chat/" class="btn-ai">
+                        <i class="fas fa-robot"></i> AI Chat
+                    </a>
+                    <a href="/blog/" class="nav-btn">Blog</a>
                     
                     <!-- User Menu -->
                     <div class="user-menu" onclick="toggleSidebar()">
@@ -358,8 +569,12 @@
                     </div>
                     <a href="/logout/" class="btn-secondary">Logout</a>
                 {% else %}
-                    <a href="/login/" class="nav-link">Login</a>
-                    <a href="/signup/" class="btn-primary">Get Started</a>
+                    <a href="/login/" class="btn-login">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                    <a href="/signup/" class="btn-signup">
+                        <i class="fas fa-user-plus"></i> Sign Up
+                    </a>
                 {% endif %}
             </div>
 
@@ -373,18 +588,20 @@
     <!-- Mobile Menu -->
     <div id="mobileMenu">
         <div class="flex flex-col space-y-4">
-            <a href="/" class="nav-link text-lg" onclick="toggleMobileMenu()">Home</a>
-            <a href="/about/" class="nav-link text-lg" onclick="toggleMobileMenu()">About</a>
-            <a href="/contact/" class="nav-link text-lg" onclick="toggleMobileMenu()">Contact</a>
+            <a href="/" class="nav-btn text-lg" onclick="toggleMobileMenu()">Home</a>
+            <a href="/about/" class="nav-btn text-lg" onclick="toggleMobileMenu()">About</a>
+            <a href="/contact/" class="nav-btn text-lg" onclick="toggleMobileMenu()">Contact</a>
             
             {% if user.is_authenticated %}
-                <a href="/dashboard/" class="nav-link text-lg" onclick="toggleMobileMenu()">Dashboard</a>
-                <a href="/ai-chat/" class="nav-link text-lg" onclick="toggleMobileMenu()">
-                    <i class="fas fa-robot mr-1"></i>AI Chat
+                <a href="/dashboard/" class="btn-dashboard text-center" onclick="toggleMobileMenu()">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
                 </a>
-                <a href="/blog/" class="nav-link text-lg" onclick="toggleMobileMenu()">Blog</a>
+                <a href="/ai-chat/" class="btn-ai text-center" onclick="toggleMobileMenu()">
+                    <i class="fas fa-robot"></i> AI Chat
+                </a>
+                <a href="/blog/" class="nav-btn text-center" onclick="toggleMobileMenu()">Blog</a>
                 
-                <div class="flex items-center space-x-2 py-2">
+                <div class="flex items-center justify-center space-x-2 py-2">
                     <div class="user-avatar">
                         {{ user.username|first|upper }}
                     </div>
@@ -393,8 +610,8 @@
                 
                 <a href="/logout/" class="btn-secondary text-center" onclick="toggleMobileMenu()">Logout</a>
             {% else %}
-                <a href="/login/" class="btn-secondary text-center" onclick="toggleMobileMenu()">Login</a>
-                <a href="/signup/" class="btn-primary text-center" onclick="toggleMobileMenu()">Get Started</a>
+                <a href="/login/" class="btn-login text-center" onclick="toggleMobileMenu()">Login</a>
+                <a href="/signup/" class="btn-signup text-center" onclick="toggleMobileMenu()">Sign Up</a>
             {% endif %}
         </div>
     </div>
@@ -405,7 +622,7 @@
         {% if messages %}
         <div class="messages-container">
             {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} fade-in">
+            <div class="alert alert-{{ message.tags }}">
                 <i class="fas fa-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'error' %}exclamation-circle{% else %}info-circle{% endif %} mr-2"></i>
                 {{ message }}
             </div>
@@ -418,7 +635,7 @@
         <div class="max-w-7xl mx-auto px-4 mb-8">
             <div class="welcome-message">
                 <div class="flex items-center">
-                    <i class="fas fa-hand-wave text-3xl text-blue-400 mr-4"></i>
+                    <i class="fas fa-hand-wave text-3xl text-blue-400 mr-4 animate-bounce"></i>
                     <div>
                         <h2 class="text-2xl font-bold">Welcome back, {{ user.username }}! 👋</h2>
                         <p class="text-gray-400">Ready to continue your legal journey?</p>
@@ -440,120 +657,13 @@
             menu.classList.toggle('active');
         }
 
-        // Toggle Sidebar (if you have one)
+        // Toggle Sidebar
         function toggleSidebar() {
-            // Add your sidebar toggle logic here if needed
-            console.log('Sidebar toggled');
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar) {
+                sidebar.classList.toggle('active');
+            }
         }
-
-        // Three.js Space Animation
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        document.getElementById('canvas-container').appendChild(renderer.domElement);
-
-        // Create stars
-        const starsGeometry = new THREE.BufferGeometry();
-        const starsCount = 2000;
-        const starsPositions = new Float32Array(starsCount * 3);
-
-        for (let i = 0; i < starsCount * 3; i += 3) {
-            starsPositions[i] = (Math.random() - 0.5) * 200;
-            starsPositions[i + 1] = (Math.random() - 0.5) * 200;
-            starsPositions[i + 2] = (Math.random() - 0.5) * 200;
-        }
-
-        starsGeometry.setAttribute('position', new THREE.BufferAttribute(starsPositions, 3));
-
-        const starsMaterial = new THREE.PointsMaterial({
-            color: 0xffffff,
-            size: 0.2,
-            transparent: true,
-            blending: THREE.AdditiveBlending
-        });
-
-        const stars = new THREE.Points(starsGeometry, starsMaterial);
-        scene.add(stars);
-
-        // Create floating orbs
-        const orbs = [];
-        const orbColors = [0x4299e1, 0x9f7aea, 0xed64a6];
-        
-        for (let i = 0; i < 5; i++) {
-            const geometry = new THREE.SphereGeometry(0.5 + Math.random() * 1, 32, 32);
-            const material = new THREE.MeshPhongMaterial({
-                color: orbColors[Math.floor(Math.random() * orbColors.length)],
-                emissive: 0x222222,
-                transparent: true,
-                opacity: 0.3,
-                wireframe: true
-            });
-            const sphere = new THREE.Mesh(geometry, material);
-            
-            sphere.position.x = (Math.random() - 0.5) * 30;
-            sphere.position.y = (Math.random() - 0.5) * 30;
-            sphere.position.z = (Math.random() - 20) * 2;
-            
-            sphere.userData = {
-                speedX: (Math.random() - 0.5) * 0.01,
-                speedY: (Math.random() - 0.5) * 0.01,
-                speedZ: (Math.random() - 0.5) * 0.01,
-                rotationSpeed: (Math.random() - 0.5) * 0.01
-            };
-            
-            scene.add(sphere);
-            orbs.push(sphere);
-        }
-
-        // Add lights
-        const ambientLight = new THREE.AmbientLight(0x404040);
-        scene.add(ambientLight);
-
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-        directionalLight.position.set(1, 1, 1);
-        scene.add(directionalLight);
-
-        const pointLight = new THREE.PointLight(0x4299e1, 1, 50);
-        pointLight.position.set(0, 0, 5);
-        scene.add(pointLight);
-
-        camera.position.z = 20;
-
-        // Animation loop
-        function animate() {
-            requestAnimationFrame(animate);
-
-            // Rotate stars
-            stars.rotation.y += 0.0002;
-            stars.rotation.x += 0.0001;
-
-            // Animate orbs
-            orbs.forEach(orb => {
-                orb.position.x += orb.userData.speedX;
-                orb.position.y += orb.userData.speedY;
-                orb.position.z += orb.userData.speedZ;
-                orb.rotation.x += orb.userData.rotationSpeed;
-                orb.rotation.y += orb.userData.rotationSpeed;
-            });
-
-            // Pulsing light
-            const time = Date.now() * 0.001;
-            pointLight.intensity = 0.5 + Math.sin(time) * 0.3;
-
-            renderer.render(scene, camera);
-        }
-
-        animate();
-
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
 
         // Auto-hide messages after 5 seconds
         setTimeout(() => {
@@ -570,10 +680,24 @@
             const menu = document.getElementById('mobileMenu');
             const btn = document.querySelector('.mobile-menu-btn');
             
-            if (menu && btn && !menu.contains(event.target) && !btn.contains(event.target)) {
+            if (menu && btn && menu.classList.contains('active') && 
+                !menu.contains(event.target) && !btn.contains(event.target)) {
                 menu.classList.remove('active');
             }
         });
+
+        // Add hover sound effect (optional)
+        const buttons = document.querySelectorAll('.btn-primary, .btn-secondary, .btn-dashboard, .btn-ai, .btn-login, .btn-signup');
+        buttons.forEach(button => {
+            button.addEventListener('mouseenter', () => {
+                button.style.transform = 'scale(1.05)';
+            });
+            button.addEventListener('mouseleave', () => {
+                button.style.transform = 'scale(1)';
+            });
+        });
     </script>
+    
+    {% block extra_js %}{% endblock %}
 </body>
 </html>
