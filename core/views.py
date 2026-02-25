@@ -58,6 +58,13 @@ def pricing_view(request):
     return render(request, "pages/pricing.html")
 
 # =========================
+# UNIVERSE EXPLORER
+# =========================
+def universe_view(request):
+    """Universe explorer with animated planets"""
+    return render(request, "pages/universe.html")
+
+# =========================
 # PORTFOLIO PAGES
 # =========================
 def portfolio_view(request):
@@ -65,16 +72,13 @@ def portfolio_view(request):
     try:
         return render(request, "portfolio/home.html")
     except Exception as e:
-        # If error occurs, show simple version
         return render(request, "portfolio/simple.html")
 
 def portfolio_debug_view(request):
     """Debug view to catch and display errors"""
     try:
-        # Try to render the actual portfolio
         return render(request, "portfolio/home.html")
     except Exception as e:
-        # Catch any error and display it
         error_type, error_value, error_traceback = sys.exc_info()
         error_message = f"""
         <html>
@@ -86,7 +90,6 @@ def portfolio_debug_view(request):
                 .error-box {{ background: #1a1a1a; padding: 20px; border-radius: 10px; margin-top: 20px; }}
                 h2 {{ color: #ff6b6b; }}
                 pre {{ background: #2a2a2a; padding: 15px; border-radius: 5px; overflow: auto; color: #ccc; }}
-                .info {{ color: #888; margin: 10px 0; }}
             </style>
         </head>
         <body>

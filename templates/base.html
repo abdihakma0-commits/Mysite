@@ -194,7 +194,7 @@
             animation: robotWave 2s infinite;
         }
         
-        /* Portfolio Button - New */
+        /* Portfolio Button */
         .btn-portfolio {
             background: linear-gradient(135deg, #A855F7, #C084FC);
             color: white;
@@ -214,6 +214,30 @@
         .btn-portfolio:hover {
             transform: translateY(-2px) scale(1.05);
             box-shadow: 0 0 30px rgba(168, 85, 247, 0.6);
+        }
+        
+        /* Universe Button - New */
+        .btn-universe {
+            background: linear-gradient(135deg, #3b82f6, #06b6d4);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            animation: universeFloat 4s ease-in-out infinite;
+        }
+        
+        .btn-universe:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.6);
+        }
+        
+        .btn-universe i {
+            animation: spin 10s linear infinite;
         }
         
         /* Login Button */
@@ -326,6 +350,16 @@
         @keyframes glow {
             0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.3); }
             50% { box-shadow: 0 0 40px rgba(168, 85, 247, 0.6); }
+        }
+        
+        @keyframes universeFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(2deg); }
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
         
         /* Navbar */
@@ -574,7 +608,7 @@
                 gap: 1rem;
             }
             
-            .btn-primary, .btn-secondary, .btn-dashboard, .btn-ai, .btn-portfolio {
+            .btn-primary, .btn-secondary, .btn-dashboard, .btn-ai, .btn-portfolio, .btn-universe {
                 padding: 0.5rem 1rem;
                 font-size: 0.9rem;
             }
@@ -618,6 +652,9 @@
                 <a href="/" class="nav-btn">Home</a>
                 <a href="/about/" class="nav-btn">About</a>
                 <a href="/contact/" class="nav-btn">Contact</a>
+                <a href="/universe/" class="btn-universe">
+                    <i class="fas fa-globe"></i> Universe
+                </a>
                 <a href="/portfolio/" class="btn-portfolio">
                     <i class="fas fa-briefcase"></i> Portfolio
                 </a>
@@ -663,6 +700,9 @@
             <a href="/" class="nav-btn text-lg" onclick="toggleMobileMenu()">Home</a>
             <a href="/about/" class="nav-btn text-lg" onclick="toggleMobileMenu()">About</a>
             <a href="/contact/" class="nav-btn text-lg" onclick="toggleMobileMenu()">Contact</a>
+            <a href="/universe/" class="btn-universe text-center" onclick="toggleMobileMenu()">
+                <i class="fas fa-globe"></i> Universe
+            </a>
             <a href="/portfolio/" class="btn-portfolio text-center" onclick="toggleMobileMenu()">
                 <i class="fas fa-briefcase"></i> Portfolio
             </a>
@@ -762,7 +802,7 @@
         });
 
         // Add hover effects
-        const buttons = document.querySelectorAll('.btn-primary, .btn-secondary, .btn-dashboard, .btn-ai, .btn-portfolio, .btn-login, .btn-signup');
+        const buttons = document.querySelectorAll('.btn-primary, .btn-secondary, .btn-dashboard, .btn-ai, .btn-portfolio, .btn-universe, .btn-login, .btn-signup');
         buttons.forEach(button => {
             button.addEventListener('mouseenter', () => {
                 button.style.transform = 'scale(1.05)';
