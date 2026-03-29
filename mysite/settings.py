@@ -189,7 +189,7 @@ CONTACT_EMAIL = [config('EMAIL_HOST_USER', default='abdihakma2091@gmail.com')]
 # =========================
 # GEMINI AI API CONFIGURATION
 # =========================
-GEMINI_API_KEY = config('GEMINI_API_KEY', default='AIzaSyAlsB4xbhp2E9DWD5QWs1UKzKOTrJFoIik')
+GEMINI_API_KEY = config('GEMINI_API_KEY', default='AIzaSyBbs8leJRyn3dbk7nQAvhZa3Ypvc-E0Xto')
 
 # =========================
 # CRISPY FORMS
